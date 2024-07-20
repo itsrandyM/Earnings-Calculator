@@ -1,0 +1,11 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend to Earning's calculator",
+  "main": "index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "author": "Randy",
+  "license": "ISC"
+}
