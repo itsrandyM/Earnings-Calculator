@@ -5,13 +5,15 @@ const app = express();
 
 //Routes
 const AuthRouter = require('./routes/Auth')
-// const userRouter = require('./routes/UserRoute')
+const userRouter = require('./routes/UserRoute')
+const incomeRouter = require('./routes/Income')
 app.use(express.json());
 const mongoUri = process.env.MONGO_URI;
 
 //routes
 app.use('/auth',AuthRouter)
-// app.use('/api', userRouter)
+app.use('/api/user', userRouter)
+app.use('/api/income',incomeRouter)
 
 
 mongoose.connect(mongoUri)
