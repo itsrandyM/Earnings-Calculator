@@ -19,17 +19,5 @@ const userSchema = new Schema({
 });
 
 
-// Virtual field to populate incomes
-// userSchema.virtual('incomeDetails', {
-//     ref: 'Income',
-//     localField: '_id',
-//     foreignField: 'userId',
-//     justOne: false // Set to true if you expect only one income record per user
-//   });
-  
-//   // Ensure virtual fields are included in JSON output
-//   userSchema.set('toObject', { virtuals: true });
-//   userSchema.set('toJSON', { virtuals: true });
-
 const User = mongoose.model('User', userSchema);
 module.exports = User

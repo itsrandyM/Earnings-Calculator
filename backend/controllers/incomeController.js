@@ -4,31 +4,35 @@ const mongoose = require('mongoose')
 
 //Create income entry
 exports.createIncome = async (req, res) => {
-    try {
-      const { month, year, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd } = req.body;
-      const userId = req.user.id;
-  
-      // Validate the required fields
-      if (!month || !year) {
-        return res.status(400).json({ message: 'Month and year are required.' });
-      }
-  
-      // Check if the user exists
-      const user = await User.findById(userId);
-      if (!user) {
-        return res.status(404).json({ message: 'User not found.' });
-      }
-  
-      // Create and save the new income entry
-      const income = new Income({ userId, month, year, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd });
-      await income.save();
-  
-      res.status(201).json(income);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error.' });
+  try {
+    const { month, year, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd } = req.body;
+    const userId = req.user.id;
+
+    // Validate the required fields
+    if (!month || !year) {
+      return res.status(400).json({ message: 'Month and year are required.' });
     }
-  };
+
+    // Check if the user exists
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: 'User not found.' });
+    }
+
+    // Create and save the new income entry
+    const income = new Income({ userId, month, year, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd });
+    await income.save();
+
+    // Add the new income ID to the user's incomes array
+    user.incomes.push(income._id);
+    await user.save();
+
+    res.status(201).json(income);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+};
 
   // Update an income entry
 exports.updateIncome = async (req, res) => {
