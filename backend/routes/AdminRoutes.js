@@ -17,7 +17,7 @@ router.post('/login/admin', async (req, res) => {
       return res.status(401).json({ message: 'Invalid credentials' });
     }
 
-    const token = jwt.sign({ adminId: admin._id }, process.env.JWT_SECRET, { expiresIn: '2h' });
+    const token = jwt.sign({ adminId: admin._id }, process.env.JWT_SECRET, { expiresIn: '6h' });
     return res.status(201).json({ message:'Login successful!', admin , token });
   } catch (err) {
     res.status(500).json({ message: err.message });
@@ -60,6 +60,23 @@ router.get('/students', adminMiddleware, async (req, res) => {
   }
 });
 
+router.get('/students/:id', adminMiddleware, async (req, res) => {
+    try {
+      const { id } = req.params;
+  
+      // Find the user by ID and populate the incomes array
+      const user = await User.findById(id).populate('incomes');
+  
+      if (user) {
+        res.json(user);
+      } else {
+        res.status(404).json({ message: 'User not found' });
+      }
+    } catch (err) {
+      console.error(err);
+      res.status(500).json({ message: 'Server error' });
+    }
+  });
 
 
 module.exports = router;
