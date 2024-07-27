@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import apiClient from '../apiClient'; // Import your apiClient
 import Navbar from '../components/Navbar';
+import { useIncome } from '../middleware.tsx/Income';
 
 const IncomeEntry: React.FC = () => {
   const [currency, setCurrency] = useState('KES');
