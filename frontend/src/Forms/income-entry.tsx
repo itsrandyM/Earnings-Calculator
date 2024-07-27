@@ -11,7 +11,7 @@ const IncomeEntry: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
-  const calculatePayableTax = (monthlyIncome:number) => {
+  const calculateKenyanPayableTax = (monthlyIncome:number) => {
     let tax = 0;
     let remainingIncome = monthlyIncome;
 
@@ -38,8 +38,41 @@ const IncomeEntry: React.FC = () => {
     return tax;
   };
 
+  const calculateEthiopianPayableTax = (monthlyIncome: number) => {
+    let tax = 0;
+    let remainingIncome = monthlyIncome;
+
+    // Ethiopian tax bands (monthly amounts)
+    const bands = [
+      { limit: 600, rate: 0.00 },  // No tax up to 600 ETB
+      { limit: 165, rate: 0.10 },  // 10% tax on income above 600 ETB up to 765 ETB
+      { limit: 120, rate: 0.15 },  // 15% tax on income above 765 ETB up to 885 ETB
+      { limit: 135, rate: 0.20 },  // 20% tax on income above 885 ETB up to 1020 ETB
+      { limit: 500, rate: 0.25 },  // 25% tax on income above 1020 ETB up to 1520 ETB
+      { limit: 1000, rate: 0.30 }, // 30% tax on income above 1520 ETB up to 2520 ETB
+      { limit: Infinity, rate: 0.35 }, // 35% tax on income above 2520 ETB
+    ];
+
+    // Iterate through each tax band
+    for (const { limit, rate } of bands) {
+      if (remainingIncome > limit) {
+        tax += limit * rate;
+        remainingIncome -= limit;
+      } else {
+        tax += remainingIncome * rate;
+        break;
+      }
+    }
+
+    return tax;
+  };
+
   const totalIncome = techJob + otherIncome;
-  const payableTax = calculatePayableTax(totalIncome);
+  const payableTax =
+    currency === 'KES'
+      ? calculateKenyanPayableTax(totalIncome)
+      : calculateEthiopianPayableTax(totalIncome);
+
   const earningsSubjectToIncomeSharing = totalIncome - payableTax
   const amountDueToDirectEd = earningsSubjectToIncomeSharing * 0.2;
  
