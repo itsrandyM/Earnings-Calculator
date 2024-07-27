@@ -12,7 +12,9 @@ const incomeSchema = new Schema({
   payableTax: Number,
   earningsSubjectToIncomeSharing: Number,
   amountDueToDirectEd: Number,
-});
+},
+{timestamps:true}
+);
 
 const Income = mongoose.model('Income', incomeSchema);
 

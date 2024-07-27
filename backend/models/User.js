@@ -16,7 +16,9 @@ const userSchema = new Schema({
   parentEmail: String,
   parentMobilePhone: String,
   incomes: [{ type: Schema.Types.ObjectId, ref: 'Income' }]
-});
+}
+,
+{timestamps:true});
 
 
 const User = mongoose.model('User', userSchema);
