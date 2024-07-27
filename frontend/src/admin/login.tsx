@@ -25,13 +25,16 @@ const AdminLogin: React.FC = () => {
 
       // Redirect to admin dashboard or homepage
       navigate('/admin-dashboard');
-    } catch (error) {
-      if (axios.isAxiosError(error) && error.response) {
-        setError(error.response.data.message || 'Login failed');
-      } else {
-        setError('An unexpected error occurred');
-      }
+    }  catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    } else if (typeof error === 'object' && error !== null && 'response' in error) {
+      const axiosError = error as { response: { data: { message: string } } };
+      throw new Error(axiosError.response.data.message);
+    } else {
+      throw new Error('An unknown error occurred');
     }
+  }
   };
 
   return (

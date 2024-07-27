@@ -81,7 +81,7 @@ const SignUpForm: React.FC = () => {
       // console.log('User email:', decodedToken.email);
 
       // Redirect or update state after successful signup
-      navigate('/dashboard')
+      navigate('/dash-user')
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -213,7 +213,7 @@ const LoginForm: React.FC = () => {
       // console.log('User email:', decodedToken.email);
 
       // Redirect or update state after successful login
-      navigate('/dashboard')
+      navigate('/dash-user')
     }  catch (error) {
       if (error instanceof Error) {
         setError(error.message);
