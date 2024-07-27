@@ -11,9 +11,36 @@ const IncomeEntry: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
+  const calculatePayableTax = (monthlyIncome:number) => {
+    let tax = 0;
+    let remainingIncome = monthlyIncome;
+
+    // Tax bands (monthly amounts)
+    const bands = [
+      { limit: 24000, rate: 0.10 },
+      { limit: 8333, rate: 0.25 },
+      { limit: 467667, rate: 0.30 },
+      { limit: 300000, rate: 0.325 },
+      { limit: Infinity, rate: 0.35 },
+    ];
+
+    // Iterate through each tax band
+    for (const { limit, rate } of bands) {
+      if (remainingIncome > limit) {
+        tax += limit * rate;
+        remainingIncome -= limit;
+      } else {
+        tax += remainingIncome * rate;
+        break;
+      }
+    }
+
+    return tax;
+  };
+
   const totalIncome = techJob + otherIncome;
-  const payableTax = totalIncome * 0.1; // Example tax calculation
-  const earningsSubjectToIncomeSharing = totalIncome;
+  const payableTax = calculatePayableTax(totalIncome);
+  const earningsSubjectToIncomeSharing = totalIncome - payableTax
   const amountDueToDirectEd = earningsSubjectToIncomeSharing * 0.2;
  
   const monthNames = [
