@@ -80,7 +80,7 @@ export const logout = async () => {
     localStorage.removeItem('email');
 
     // Redirect to login page
-    window.location.href = '/login'; // Adjust the path as needed
+    window.location.href = '/'; // Adjust the path as needed
   } catch (error) {
     console.error('Logout failed:', error);
     // Handle any additional error cases
