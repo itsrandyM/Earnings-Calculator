@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // Assuming you're using React Router
+import LogoutButton from '../buttons/logout';
 
 const Navbar: React.FC = () => {
   return (
@@ -10,6 +11,7 @@ const Navbar: React.FC = () => {
           <Link to="/dashboard" className="text-white">Dashboard</Link>
           <Link to="/companies" className="text-white">Companies</Link>
           <Link to="/income-entry" className="text-white">Income Entry</Link>
+          <LogoutButton />
         </div>
       </div>
     </nav>
