@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import apiClient from '../apiClient'; // Import your apiClient
 import Navbar from '../components/adminNav';
+import LoadingSpinner from '../components/LoadingSpinner';
 
 const AdminDashboard: React.FC = () => {
   const [email, setEmail] = useState<string | null>(null);
@@ -8,6 +9,8 @@ const AdminDashboard: React.FC = () => {
   const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
   const [selectedYear, setSelectedYear] = useState<number | null>(null);
   const [selectedStudent, setSelectedStudent] = useState<any | null>(null);
+  const [loading, setLoading] = useState<boolean>(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -34,6 +37,22 @@ const AdminDashboard: React.FC = () => {
     fetchEmail();
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <LoadingSpinner />
+      </div>
+    );
+  }
+  if (error) return <p className="text-red-500">{error}</p>;
+
   const getAuthToken = () => {
     return localStorage.getItem('token') || '';
   };
@@ -59,15 +78,21 @@ const AdminDashboard: React.FC = () => {
       student.cohortYear === selectedYear
   );
 
+    // Extract the first letter of the email
+    const emailInitial = email ? email.charAt(0).toUpperCase() : '?';
+
   return (
     <div>
       <Navbar />
       <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Admin Dashboard</h1>
-        <div className="bg-white shadow-md rounded-lg p-4 mb-6 w-full max-w-lg text-center">
-          <p className="text-lg font-medium text-gray-700">
-            Logged in as: <span className="font-bold">{email}</span>
-          </p>
+      <div className="bg-white shadow-md rounded-lg p-4 mb-6 w-full max-w-lg flex items-center justify-center">
+          <div className="flex items-center space-x-4">
+            <div className="w-10 h-10 flex items-center justify-center bg-blue-500 text-white rounded-full font-bold text-lg">
+              {emailInitial}
+            </div>
+            <p className="text-lg font-medium text-gray-700">{email}</p>
+          </div>
         </div>
         <div className="flex flex-wrap justify-center mb-6 space-x-4">
           <button
@@ -76,11 +101,11 @@ const AdminDashboard: React.FC = () => {
               selectedCountry === 'USA' ? 'bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'
             }`}
           >
-            USA
+            Ethiopia
           </button>
           <button
             onClick={() => handleCountryClick('Kenya')}
-            className={`px-6 py-3 rounded-lg text-lg font-semibold text-white transition ${
+            className={`px-8 py-3 rounded-lg text-lg font-semibold text-white transition ${
               selectedCountry === 'Kenya' ? 'bg-blue-700' : 'bg-blue-500 hover:bg-blue-600'
             }`}
           >
@@ -91,16 +116,16 @@ const AdminDashboard: React.FC = () => {
           <div className="flex flex-wrap justify-center mb-4">
             <button
               onClick={() => handleYearClick(2023)}
-              className={`bg-green-500 text-white p-2 rounded m-2 ${
-                selectedYear === 2023 ? 'bg-green-700' : ''
+              className={`bg-green-500 text-white p-2 rounded m-2 px-8 ${
+                selectedYear === 2023 ? 'bg-green-700 px-8' : ''
               }`}
             >
               2023
             </button>
             <button
               onClick={() => handleYearClick(2024)}
-              className={`bg-green-500 text-white p-2 rounded m-2 ${
-                selectedYear === 2024 ? 'bg-green-700' : ''
+              className={`bg-green-500 text-white p-2 rounded m-2 px-8${
+                selectedYear === 2024 ? 'bg-green-700 px-8' : ''
               }`}
             >
               2024

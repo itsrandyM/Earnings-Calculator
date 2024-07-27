@@ -5,13 +5,12 @@ import { login, signup } from './authService';
 
 const AuthForm: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false);
-  const navigate = useNavigate()
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <div className="max-w-4xl w-full bg-white shadow-md rounded-lg flex flex-col md:flex-row">
         <div className="md:w-1/3 p-6 bg-blue-500 flex items-center justify-center">
-          <h1 className="text-white text-2xl font-bold">Logo</h1>
+        <img src="/public/DirectEd Development Logo horizontal white.png" alt="Logo" className="h-10 w-auto" />
         </div>
         <div className="md:w-2/3 p-6">
           <h2 className="text-2xl font-bold mb-4">{isSignUp ? 'Sign Up' : 'Login'}</h2>
@@ -22,7 +21,7 @@ const AuthForm: React.FC = () => {
           )}
           <button 
             onClick={() => setIsSignUp(!isSignUp)} 
-            className="text-blue-500 mt-4"
+            className="text-blue-500 mt-4 hover:text-blue-800 hover:font-bold"
           >
             {isSignUp ? 'Already have an account? Login' : "Don't have an account? Sign Up"}
           </button>
@@ -75,12 +74,6 @@ const SignUpForm: React.FC = () => {
       console.log('Signup successful:', data);
       setMessage(data.message);
       alert(data.message)
-
-      // // Decode token to access user data
-      // const decodedToken: { email: string } = jwtDecode(token);
-      // console.log('User email:', decodedToken.email);
-
-      // Redirect or update state after successful signup
       navigate('/dash-user')
     } catch (error) {
       if (error instanceof Error) {
