@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 import apiClient from '../apiClient'; // Import your apiClient
 import Navbar from '../components/Navbar';
-import { useIncome } from '../middleware.tsx/Income';
+import { useNavigate } from 'react-router-dom';
 
 const IncomeEntry: React.FC = () => {
+  const navigate = useNavigate()
   const [currency, setCurrency] = useState('KES');
   const [techJob, setTechJob] = useState<number>(0);
   const [otherIncome, setOtherIncome] = useState<number>(0);
@@ -122,6 +123,7 @@ const IncomeEntry: React.FC = () => {
       console.log(response)
       setSuccessMessage('Income entry saved successfully.');
       setError(null);
+      navigate('/dash-user')
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);
@@ -135,108 +137,112 @@ const IncomeEntry: React.FC = () => {
   return (
     <div>
       <Navbar />
-      <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
-        <h1 className="text-2xl font-bold mb-4">Income Entry</h1>
-        <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
-          <form onSubmit={handleSubmit} className="space-y-4">
-          <div className='flex flex-row'>
-      <div className="mb-4">
-        <label className="block text-gray-700">Month</label>
-        <select
-          value={month}
-          onChange={(e) => setMonth(e.target.value)}
-          className="w-3/4 p-2 border rounded"
-          required
-        >
-          <option value="">Month</option>
-          {monthNames.map((month, index) => (
-            <option key={index} value={index + 1}>
-              {month}
-            </option>
-          ))}
-        </select>
-      </div>
-      <div className="mb-4">
-        <label className="block text-gray-700">Year</label>
-        <select
-          value={year}
-          onChange={(e) => setYear(e.target.value)}
-          className="w-full p-2 border rounded"
-          required
-        >
-          <option value="">Year</option>
-          {yearOptions.map((year) => (
-            <option key={year} value={year}>
-              {year}
-            </option>
-          ))}
-        </select>
-      </div>
-    </div>
-    <div>
-      <select value={currency} onChange={handleCurrencyChange}>
-        <option value="KES">Kenyan Shilling (KES)</option>
-        <option value="ETB">Ethiopian Birr (ETB)</option>
-      </select>
-      </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Tech Job Income</label>
+      <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6 pt-28">
+        <h1 className="text-3xl font-bold mb-6 text-blue-600">Enter Monthly Earnings</h1>
+        <div className="w-full max-w-md bg-white shadow-lg rounded-xl p-8">
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div className="flex justify-between space-x-4">
+              <div className="w-1/2">
+                <label className="block text-gray-700 mb-2">Month</label>
+                <select
+                  value={month}
+                  onChange={(e) => setMonth(e.target.value)}
+                  className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  required
+                >
+                  <option value="">Month</option>
+                  {monthNames.map((month, index) => (
+                    <option key={index} value={index + 1}>
+                      {month}
+                    </option>
+                  ))}
+                </select>
+              </div>
+              <div className="w-1/2">
+                <label className="block text-gray-700 mb-2">Year</label>
+                <select
+                  value={year}
+                  onChange={(e) => setYear(e.target.value)}
+                  className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                  required
+                >
+                  <option value="">Year</option>
+                  {yearOptions.map((year) => (
+                    <option key={year} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-2">Currency</label>
+              <select
+                value={currency}
+                onChange={handleCurrencyChange}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              >
+                <option value="KES">Kenyan Shilling (KES)</option>
+                <option value="ETB">Ethiopian Birr (ETB)</option>
+              </select>
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-2">Tech Job Income</label>
               <input
-                type="currency"
+                type="number"
                 value={techJob}
                 onChange={(e) => setTechJob(Number(e.target.value))}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
-              
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Other Income</label>
+            <div>
+              <label className="block text-gray-700 mb-2">Other Income</label>
               <input
                 type="number"
                 value={otherIncome}
                 onChange={(e) => setOtherIncome(Number(e.target.value))}
-                className="w-full p-2 border rounded"
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Total Income</label>
+            <div>
+              <label className="block text-gray-700 mb-2">Total Income</label>
               <input
                 type="number"
                 value={totalIncome}
                 readOnly
-                className="w-full p-2 border rounded bg-gray-100"
+                className="w-full p-2 border rounded-lg bg-gray-100 focus:outline-none"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Payable Tax</label>
+            <div>
+              <label className="block text-gray-700 mb-2">Payable Tax</label>
               <input
                 type="number"
                 value={payableTax}
                 readOnly
-                className="w-full p-2 border rounded bg-gray-100"
+                className="w-full p-2 border rounded-lg bg-gray-100 focus:outline-none"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Earnings Subject to Income Sharing</label>
+            <div>
+              <label className="block text-gray-700 mb-2">Earnings Subject to Income Sharing</label>
               <input
                 type="number"
                 value={earningsSubjectToIncomeSharing}
                 readOnly
-                className="w-full p-2 border rounded bg-gray-100"
+                className="w-full p-2 border rounded-lg bg-gray-100 focus:outline-none"
               />
             </div>
-            <div className="mb-4">
-              <label className="block text-gray-700">Amount Due to DirectEd</label>
+            <div>
+              <label className="block text-gray-700 mb-2">Amount Due to DirectEd</label>
               <input
                 type="number"
                 value={amountDueToDirectEd}
                 readOnly
-                className="w-full p-2 border rounded bg-gray-100"
+                className="w-full p-2 border rounded-lg bg-gray-100 focus:outline-none"
               />
             </div>
             <button
               type="submit"
-              className="bg-blue-500 text-white p-2 rounded w-full"
+              className="bg-blue-500 text-white py-2 rounded-lg w-full hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
             >
               Submit
             </button>

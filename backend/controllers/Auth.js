@@ -125,7 +125,7 @@ const Logout = expressAsyncHandler(async (req, res) => {
 // Generate JWT
 const generateToken = (id,email) => {
     return jwt.sign({ id, email }, process.env.JWT_SECRET, {
-      expiresIn: '2h',
+      expiresIn: '1d',
     });
   };
 

@@ -1,30 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import apiClient from '../apiClient';
-
-// const UserDashboard: React.FC = () => {
-//   const [incomes, setIncomes] = useState<any[]>([]);
-//   const [error, setError] = useState<string | null>(null);
-
-//   const getAuthToken = () => {
-//     return localStorage.getItem('token') || '';
-//   };
-
-//   useEffect(() => {
-//     const fetchIncomes = async () => {
-//       try {
-//         const token = getAuthToken();
-//         const response = await apiClient.get('/api/income', {
-//           headers: { 'Authorization': `Bearer ${token}` }
-//         });
-//         setIncomes(response.data);
-//       } catch (err) {
-//         setError('Failed to fetch income data.');
-//       }
-//     };
-
-//     fetchIncomes();
-//   }, []);
+import LoadingSpinner from '../components/LoadingSpinner';
 
 interface Income {
   _id: string;
@@ -42,6 +19,7 @@ interface Income {
 const UserDashboard: React.FC = () => {
   const [incomes, setIncomes] = useState<Income[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [email, setEmail] = useState<string | null>(null) 
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -67,17 +45,35 @@ const UserDashboard: React.FC = () => {
         setLoading(false);
       }
     };
+    const fetchEmail = () => {
+      const storedEmail = localStorage.getItem('email');
+      setEmail(storedEmail || 'No email found');
+    };
 
     fetchIncomes();
+    fetchEmail()
   }, []);
 
-  if (loading) return <p>Loading...</p>;
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 3000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center min-h-screen bg-gray-100">
+        <LoadingSpinner />
+      </div>
+    );
+  }
   if (error) return <p className="text-red-500">{error}</p>;
 
   return (
     <div>
-    <Navbar />
-    <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
+    <Navbar  />
+    <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6 pt-28">
       <h1 className="text-2xl font-bold mb-4">User Dashboard</h1>
       <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
         {incomes.length > 0 ? (
