@@ -1,43 +1,40 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Navbar from '../components/Navbar';
 import { useIncome } from '../middleware.tsx/Income';
 
-const IncomeEntry: React.FC = () => {
-  const { setIncomeData } = useIncome();
-  const [techJob, setTechJob] = useState<number>(0);
-  const [otherIncome, setOtherIncome] = useState<number>(0);
-  const totalIncome = techJob + otherIncome;
+const UserDashboard: React.FC = () => {
+  const { incomeData } = useIncome();
+
+  const totalIncome = incomeData.techJob + incomeData.otherIncome;
   const payableTax = totalIncome * 0.1; // Example tax calculation
   const earningsSubjectToIncomeSharing = totalIncome;
   const amountDueToDirectEd = earningsSubjectToIncomeSharing * 0.2;
-
-  const handleSave = () => {
-    setIncomeData({ techJob, otherIncome });
-    alert('Income data saved!');
-  };
 
   return (
     <div>
       <Navbar />
       <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
-        <h1 className="text-2xl font-bold mb-4">Income Entry</h1>
+        <h1 className="text-2xl font-bold mb-4">User Dashboard</h1>
         <div className="w-full max-w-md bg-white shadow-md rounded-lg p-6">
+          <div className="mb-4">
+            <h2 className="text-xl font-bold">Income Details</h2>
+          </div>
           <div className="mb-4">
             <label className="block text-gray-700">Tech Job Income</label>
             <input
               type="number"
-              value={techJob}
-              onChange={(e) => setTechJob(Number(e.target.value))}
-              className="w-full p-2 border rounded"
+              value={incomeData.techJob}
+              readOnly
+              className="w-full p-2 border rounded bg-gray-100"
             />
           </div>
           <div className="mb-4">
             <label className="block text-gray-700">Other Income</label>
             <input
               type="number"
-              value={otherIncome}
-              onChange={(e) => setOtherIncome(Number(e.target.value))}
-              className="w-full p-2 border rounded"
+              value={incomeData.otherIncome}
+              readOnly
+              className="w-full p-2 border rounded bg-gray-100"
             />
           </div>
           <div className="mb-4">
@@ -76,11 +73,10 @@ const IncomeEntry: React.FC = () => {
               className="w-full p-2 border rounded bg-gray-100"
             />
           </div>
-          <button onClick={handleSave} className="bg-blue-500 text-white p-2 rounded">Save</button>
         </div>
       </div>
     </div>
   );
 };
 
-export default IncomeEntry;
+export default UserDashboard;
