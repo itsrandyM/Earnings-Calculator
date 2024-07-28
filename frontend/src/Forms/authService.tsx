@@ -79,10 +79,15 @@ export const logout = async () => {
     localStorage.removeItem('token');
     localStorage.removeItem('email');
 
-    // Redirect to login page
-    window.location.href = '/'; // Adjust the path as needed
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    if (isAdmin) {
+      window.location.href = '/admin-login';
+    } else {
+      window.location.href = '/';
+    }
+
   } catch (error) {
     console.error('Logout failed:', error);
-    // Handle any additional error cases
+    alert('Logout Failed')
   }
 };

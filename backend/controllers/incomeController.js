@@ -5,7 +5,7 @@ const mongoose = require('mongoose')
 //Create income entry
 exports.createIncome = async (req, res) => {
   try {
-    const { month, year, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd } = req.body;
+    const { month, year, currency, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd } = req.body;
     const userId = req.user.id;
 
     // Validate the required fields
@@ -20,7 +20,7 @@ exports.createIncome = async (req, res) => {
     }
 
     // Create and save the new income entry
-    const income = new Income({ userId, month, year, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd });
+    const income = new Income({ userId, month, year, currency, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd });
     await income.save();
 
     // Add the new income ID to the user's incomes array
@@ -112,7 +112,7 @@ exports.getIncomesByUser = async (req, res) => {
       const userId = req.user.id;
   
       // Find all income entries for the user
-      const incomes = await Income.find({ userId });
+      const incomes = await Income.find({ userId }).sort({ createdAt: -1 });
   
       if (!incomes.length) {
         return res.status(404).json({ message: 'No incomes found for this user.' });

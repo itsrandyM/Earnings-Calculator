@@ -189,26 +189,26 @@ const AdminDashboard: React.FC = () => {
           <strong>Projected Income:</strong>
         </p>
         <p className="text-sm">
-          Tech Job - ${income.techJobEarnings || 'N/A'}, Other - $
-          {income.otherEarnings || 'N/A'}
+          Tech Job - {income.techJobEarnings || 'N/A'}{income.currency}, Other - 
+          {income.otherEarnings || 'N/A'}{income.currency}
         </p>
         <p className="mt-2 mb-1">
           <strong>Actual Income:</strong>
         </p>
         <p className="text-sm">
-          Tech Job - ${income.techJobEarnings || 'N/A'}, Other - $
-          {income.otherEarnings || 'N/A'}
+          Tech Job - {income.techJobEarnings || 'N/A'}{income.currency}, Other - 
+          {income.otherEarnings || 'N/A'}{income.currency}
         </p>
         <p className="mt-2">
           <strong>Earnings Subject to Income Sharing:</strong>
         </p>
         <p className="text-sm">
-          ${income.earningsSubjectToIncomeSharing || 'N/A'}
+          {income.earningsSubjectToIncomeSharing || 'N/A'}{income.currency}
         </p>
         <p className="mt-2">
           <strong>Amount Due to DirectEd:</strong>
         </p>
-        <p className="text-sm">${income.amountDueToDirectEd || 'N/A'}</p>
+        <p className="text-sm">{income.amountDueToDirectEd || 'N/A'}{income.currency}</p>
       </div>
     ))
   ) : (

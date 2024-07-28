@@ -5,10 +5,12 @@ import Companies from "./company/company";
 import IncomeEntry from "./Forms/income-entry";
 import UserDashboard from "./dashboard/dashboard";
 import AdminLogin from "./admin/login";
+import { AxiosInterceptor } from "./apiClient";
 
 function App() {
   return (
     <Router>
+      <AxiosInterceptor>
         <Routes>
             <Route path='/' element={<AuthForm/>}></Route>
             <Route path='/admin-login' element={<AdminLogin/>}></Route>
@@ -17,6 +19,7 @@ function App() {
             <Route path="/income-entry" element={<IncomeEntry />} />
             <Route path="/dash-user" element={<UserDashboard />} />
         </Routes>
+        </AxiosInterceptor>
     </Router>
   );
 }

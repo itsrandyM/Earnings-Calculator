@@ -100,7 +100,7 @@ const UserDashboard: React.FC = () => {
                   <div className="mb-2">
                     <p>
                       <strong>Tech Job Income:</strong> ${income.techJobEarnings}
-                    </p>
+                    </p> 
                     <p>
                       <strong>Other Income:</strong> ${income.otherEarnings}
                     </p>

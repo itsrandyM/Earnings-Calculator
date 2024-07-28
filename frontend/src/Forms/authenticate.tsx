@@ -69,7 +69,11 @@ const SignUpForm: React.FC = () => {
         parentMobilePhone
       );
       const token = data.token;
-      localStorage.setItem('token', token);
+      const storeToken = (token: string, isAdmin = false) => {
+        localStorage.setItem('token', token);
+        localStorage.setItem('isAdmin', isAdmin ? 'true' : 'false');
+      };
+      storeToken(token, false);
       localStorage.setItem('email', data.email)
       console.log('Signup successful:', data);
       setMessage(data.message);
@@ -197,9 +201,17 @@ const LoginForm: React.FC = () => {
     try {
       const data = await login(email, password);
       const token = data.token;
-      localStorage.setItem('token', token);
+      
+      const storeToken = (token: string, isAdmin = false) => {
+        localStorage.setItem('token', token);
+        localStorage.setItem('isAdmin', isAdmin ? 'true' : 'false');
+      };
+
+      storeToken(token, false);
+
       localStorage.setItem('email', data.email)
       console.log('Login successful:', data);
+      alert(data.message)
 
       // // Decode token to access user data
       // const decodedToken: { email: string } = jwtDecode(token);

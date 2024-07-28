@@ -6,6 +6,7 @@ const incomeSchema = new Schema({
   userId: { type: Schema.Types.ObjectId, ref: 'User' ,required:true},
   month: String,
   year: Number,
+  currency:String,
   techJobEarnings: Number,
   otherEarnings: Number,
   totalEarnings: Number,
