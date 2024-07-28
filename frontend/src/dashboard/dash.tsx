@@ -57,8 +57,6 @@ const AdminDashboard: React.FC = () => {
   }
   if (error) return <p className="text-red-500">{error}</p>;
 
-
-
   const handleCountryClick = (country: string) => {
     setSelectedCountry(country);
     setSelectedYear(null);
@@ -80,15 +78,15 @@ const AdminDashboard: React.FC = () => {
       student.cohortYear === selectedYear
   );
 
-    // Extract the first letter of the email
-    const emailInitial = email ? email.charAt(0).toUpperCase() : '?';
+  // Extract the first letter of the email
+  const emailInitial = email ? email.charAt(0).toUpperCase() : '?';
 
   return (
     <div>
       <Navbar />
       <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Admin Dashboard</h1>
-      <div className="bg-white shadow-md p-4 mb-6 w-full max-w-lg flex items-center justify-center">
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">Admin Dashboard</h1>
+        <div className="bg-white shadow-md rounded-lg p-4 mb-6 w-full max-w-lg flex items-center justify-center">
           <div className="flex items-center space-x-4">
             <div className="w-10 h-10 flex items-center justify-center bg-blue-500 text-white rounded-full font-bold text-lg">
               {emailInitial}
@@ -119,15 +117,15 @@ const AdminDashboard: React.FC = () => {
             <button
               onClick={() => handleYearClick(2023)}
               className={`bg-green-500 text-white p-2 rounded m-2 px-8 ${
-                selectedYear === 2023 ? 'bg-green-700 px-8' : ''
+                selectedYear === 2023 ? 'bg-green-700' : ''
               }`}
             >
               2023
             </button>
             <button
               onClick={() => handleYearClick(2024)}
-              className={`bg-green-500 text-white p-2 rounded m-2 px-8${
-                selectedYear === 2024 ? 'bg-green-700 px-8' : ''
+              className={`bg-green-500 text-white p-2 rounded m-2 px-8 ${
+                selectedYear === 2024 ? 'bg-green-700' : ''
               }`}
             >
               2024
@@ -145,78 +143,130 @@ const AdminDashboard: React.FC = () => {
                   {selectedStudent.firstName} {selectedStudent.lastName}
                 </h3>
                 <div className="my-12 flex flex-row justify-around">
+                  <div>
+                    <p>
+                      <strong>Email:</strong> {selectedStudent.email}
+                    </p>
+                    <p>
+                      <strong>Mobile Phone:</strong> {selectedStudent.mobilePhone}
+                    </p>
+                    <p>
+                      <strong>Cohort Year:</strong> {selectedStudent.cohortYear}
+                    </p>
+                    <p>
+                      <strong>Country of Residence:</strong> {selectedStudent.countryOfResidence}
+                    </p>
+                    <p>
+                      <strong>Middle Name:</strong> {selectedStudent.middleName}
+                    </p>
+                  </div>
+                  <div>
+                    <p className="mt-4 font-bold">Parent/Guardian Details:</p>
+                    <p>
+                      <strong>Name:</strong> {selectedStudent.parentFirstName} {selectedStudent.parentMiddleName} {selectedStudent.parentLastName}
+                    </p>
+                    <p>
+                      <strong>Email:</strong> {selectedStudent.parentEmail}
+                    </p>
+                    <p>
+                      <strong>Mobile Phone:</strong> {selectedStudent.parentMobilePhone}
+                    </p>
+                  </div>
+                </div>
                 <div>
-      <p>
-        <strong>Email:</strong> {selectedStudent.email}
-      </p>
-      <p>
-        <strong>Mobile Phone:</strong> {selectedStudent.mobilePhone}
-      </p>
-      <p>
-        <strong>Cohort Year:</strong> {selectedStudent.cohortYear}
-      </p>
-      <p>
-        <strong>Country of Residence:</strong> {selectedStudent.countryOfResidence}
-      </p>
-      <p>
-        <strong>Middle Name:</strong> {selectedStudent.middleName}
-      </p>
-      </div>
-      <div>
-      <p className="mt-4 font-bold">Parent/Guardian Details:</p>
-      <p>
-        <strong>Name:</strong> {selectedStudent.parentFirstName} {selectedStudent.parentMiddleName} {selectedStudent.parentLastName}
-      </p>
-      <p>
-        <strong>Email:</strong> {selectedStudent.parentEmail}
-      </p>
-      <p>
-        <strong>Mobile Phone:</strong> {selectedStudent.parentMobilePhone}
-      </p>
-      </div>
-    </div>
-    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-  {selectedStudent.incomes.length > 0 ? (
-    selectedStudent.incomes.map((income: any, index: number) => (
-      <div
-        key={index}
-        className="bg-blue-100 p-4 border rounded-lg shadow-md transition transform hover:scale-105"
-      >
-        <p className="font-semibold mb-2">
-          {income.month || 'N/A'} {income.year || 'N/A'}
-        </p>
-        <p className="mb-1">
-          <strong>Projected Income:</strong>
-        </p>
-        <p className="text-sm">
-          Tech Job - {income.techJobEarnings || 'N/A'}{income.currency}, Other - 
-          {income.otherEarnings || 'N/A'}{income.currency}
-        </p>
-        <p className="mt-2 mb-1">
-          <strong>Actual Income:</strong>
-        </p>
-        <p className="text-sm">
-          Tech Job - {income.techJobEarnings || 'N/A'}{income.currency}, Other - 
-          {income.otherEarnings || 'N/A'}{income.currency}
-        </p>
-        <p className="mt-2">
-          <strong>Earnings Subject to Income Sharing:</strong>
-        </p>
-        <p className="text-sm">
-          {income.earningsSubjectToIncomeSharing || 'N/A'}{income.currency}
-        </p>
-        <p className="mt-2">
-          <strong>Amount Due to DirectEd:</strong>
-        </p>
-        <p className="text-sm">{income.amountDueToDirectEd || 'N/A'}{income.currency}</p>
-      </div>
-    ))
-  ) : (
-    <p className="text-center col-span-1 sm:col-span-2 text-red-500">
-      No income data available.
-    </p>
-  )}
-</div>
+                  <h4 className="text-lg font-bold my-4 text-center">First Half of the Year</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {selectedStudent.incomes.length > 0 ? (
+                      selectedStudent.incomes
+                        .filter((income: any) => income.month >= 1 && income.month <= 6)
+                        .map((income: any, index: number) => (
+                          <div
+                            key={index}
+                            className="bg-blue-100 p-4 border rounded-lg shadow-md transition transform hover:scale-105"
+                          >
+                            <p className="font-semibold mb-2">
+                              {income.month || 'N/A'} {income.year || 'N/A'}
+                            </p>
+                            <p className="mb-1">
+                              <strong>Projected Income:</strong>
+                            </p>
+                            <p className="text-sm">
+                              Tech Job - ${income.techJobEarnings || 'N/A'}, Other - $
+                              {income.otherEarnings || 'N/A'}
+                            </p>
+                            <p className="mt-2 mb-1">
+                              <strong>Actual Income:</strong>
+                            </p>
+                            <p className="text-sm">
+                              Tech Job - ${income.techJobEarnings || 'N/A'}, Other - $
+                              {income.otherEarnings || 'N/A'}
+                            </p>
+                            <p className="mt-2">
+                              <strong>Earnings Subject to Income Sharing:</strong>
+                            </p>
+                            <p className="text-sm">
+                              ${income.earningsSubjectToIncomeSharing || 'N/A'}
+                            </p>
+                            <p className="mt-2">
+                              <strong>Amount Due to DirectEd:</strong>
+                            </p>
+                            <p className="text-sm">${income.amountDueToDirectEd || 'N/A'}</p>
+                          </div>
+                        ))
+                    ) : (
+                      <p className="text-center col-span-1 sm:col-span-2 text-red-500">
+                        No income data available.
+                      </p>
+                    )}
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-lg font-bold my-4 text-center">Second Half of the Year</h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    {selectedStudent.incomes.length > 0 ? (
+                      selectedStudent.incomes
+                        .filter((income: any) => income.month >= 7 && income.month <= 12)
+                        .map((income: any, index: number) => (
+                          <div
+                            key={index}
+                            className="bg-blue-100 p-4 border rounded-lg shadow-md transition transform hover:scale-105"
+                          >
+                            <p className="font-semibold mb-2">
+                              {income.month || 'N/A'} {income.year || 'N/A'}
+                            </p>
+                            <p className="mb-1">
+                              <strong>Projected Income:</strong>
+                            </p>
+                            <p className="text-sm">
+                              Tech Job - ${income.techJobEarnings || 'N/A'}, Other - $
+                              {income.otherEarnings || 'N/A'}
+                            </p>
+                            <p className="mt-2 mb-1">
+                              <strong>Actual Income:</strong>
+                            </p>
+                            <p className="text-sm">
+                              Tech Job - ${income.techJobEarnings || 'N/A'}, Other - $
+                              {income.otherEarnings || 'N/A'}
+                            </p>
+                            <p className="mt-2">
+                              <strong>Earnings Subject to Income Sharing:</strong>
+                            </p>
+                            <p className="text-sm">
+                              ${income.earningsSubjectToIncomeSharing || 'N/A'}
+                            </p>
+                            <p className="mt-2">
+                              <strong>Amount Due to DirectEd:</strong>
+                            </p>
+                            <p className="text-sm">${income.amountDueToDirectEd || 'N/A'}</p>
+                          </div>
+                        ))
+                    ) : (
+                      <p className="text-center col-span-1 sm:col-span-2 text-red-500">
+                        No income data available.
+                      </p>
+                    )}
+                  </div>
+                </div>
 
                 <button
                   onClick={() => setSelectedStudent(null)}
