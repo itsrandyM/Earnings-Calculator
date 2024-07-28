@@ -9,7 +9,11 @@ const AuthRouter = require('./routes/Auth')
 const userRouter = require('./routes/UserRoute')
 const incomeRouter = require('./routes/Income')
 const adminRoutes = require('./routes/AdminRoutes')
-app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5173', 
+    credentials: true, 
+  }));
+  
 app.use(express.json());
 
 const mongoUri = process.env.MONGO_URI;
