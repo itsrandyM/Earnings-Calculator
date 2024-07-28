@@ -1,6 +1,6 @@
 // corsOptions.js
 
-const allowedOrigins = ['https://earnings-calculator.vercel.app','http://localhost:5173'];
+const allowedOrigins = ['https://earnings-calculator.vercel.app'];
 
 const corsOptions = (req, callback) => {
   let corsOptions;
