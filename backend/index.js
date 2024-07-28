@@ -15,7 +15,7 @@ const adminRoutes = require('./routes/AdminRoutes')
 //     credentials: true, 
 //   }));
 app.use(cors(corsOptions));
-  
+app.options('*', cors(corsOptions)); 
 app.use(express.json());
 
 const mongoUri = process.env.MONGO_URI;
