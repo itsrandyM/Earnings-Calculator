@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const apiClient = axios.create({
-  baseURL: 'https://earnings-calculator-backend.vercel.app/', 
+  baseURL: 'http://localhost:4000', 
 });
 
 apiClient.interceptors.request.use(
