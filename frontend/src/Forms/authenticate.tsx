@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { login, signup } from './authService'; 
 // import jwtDecode from 'jwt-decode';
 
@@ -47,7 +47,7 @@ const SignUpForm: React.FC = () => {
   const [parentEmail, setParentEmail] = useState('');
   const [parentMobilePhone, setParentMobilePhone] = useState('');
   const [error, setError] = useState('');
-  const [message, setMessage] = useState('');
+  // const [message, setMessage] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -76,7 +76,7 @@ const SignUpForm: React.FC = () => {
       storeToken(token, false);
       localStorage.setItem('email', data.email)
       // console.log('Signup successful:', data);
-      setMessage(data.message);
+      // setMessage(data.message);
       alert(data.message)
       navigate('/dash-user')
     } catch (error) {
