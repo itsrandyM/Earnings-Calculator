@@ -12,6 +12,10 @@ const AdminDashboard: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
 
+  const getAuthToken = () => {
+    return localStorage.getItem('token') || '';
+  };
+
   useEffect(() => {
     const fetchStudents = async () => {
       try {
@@ -53,9 +57,7 @@ const AdminDashboard: React.FC = () => {
   }
   if (error) return <p className="text-red-500">{error}</p>;
 
-  const getAuthToken = () => {
-    return localStorage.getItem('token') || '';
-  };
+
 
   const handleCountryClick = (country: string) => {
     setSelectedCountry(country);
