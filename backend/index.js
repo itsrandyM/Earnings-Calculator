@@ -3,16 +3,18 @@ const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors');
 const app = express();
+const corsOptions = require('./config/corsOptions')
 
 //Routes
 const AuthRouter = require('./routes/Auth')
 const userRouter = require('./routes/UserRoute')
 const incomeRouter = require('./routes/Income')
 const adminRoutes = require('./routes/AdminRoutes')
-app.use(cors({
-    origin: 'https://earnings-calculator.vercel.app/', 
-    credentials: true, 
-  }));
+// app.use(cors({
+//     origin: 'https://earnings-calculator.vercel.app/', 
+//     credentials: true, 
+//   }));
+app.use(cors(corsOptions));
   
 app.use(express.json());
 
