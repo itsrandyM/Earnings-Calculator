@@ -86,7 +86,7 @@ const AdminDashboard: React.FC = () => {
       <Navbar />
       <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6">
       <h1 className="text-3xl font-bold mb-6 text-gray-800">Admin Dashboard</h1>
-      <div className="bg-white shadow-md rounded-lg p-4 mb-6 w-full max-w-lg flex items-center justify-center">
+      <div className="bg-white shadow-md p-4 mb-6 w-full max-w-lg flex items-center justify-center">
           <div className="flex items-center space-x-4">
             <div className="w-10 h-10 flex items-center justify-center bg-blue-500 text-white rounded-full font-bold text-lg">
               {emailInitial}
