@@ -10,7 +10,7 @@ const userRouter = require('./routes/UserRoute')
 const incomeRouter = require('./routes/Income')
 const adminRoutes = require('./routes/AdminRoutes')
 app.use(cors({
-    origin: 'http://localhost:5173', 
+    origin: 'https://earnings-calculator.vercel.app/', 
     credentials: true, 
   }));
   
