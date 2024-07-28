@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Lottie from 'lottie-react';
-import loadingAnimation from '../../public/loading.json'; // Update this path to your Lottie JSON file
+import loadingAnimation from '../public/loading.json'; // Update this path to your Lottie JSON file
 
 const LoadingSpinner: React.FC = () => {
   return (

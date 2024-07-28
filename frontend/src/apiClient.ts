@@ -29,10 +29,10 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
       },
       (error) => {
         if (error.response) {
-          const { status, data } = error.response;
+          const { data } = error.response;
           const message = data.message || '';
 
-          if (status === 401 && message === 'Token has expired. Please log in again.') {
+          if (message === 'Token has expired. Please log in again.') {
             // Handle expired token
             const isAdmin = localStorage.getItem('isAdmin') === 'true';
             console.log('isAdmin:', isAdmin); // Verify this value

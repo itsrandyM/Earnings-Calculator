@@ -80,10 +80,11 @@ export const logout = async () => {
     );
 
     // Clear localStorage
+    const isAdmin = localStorage.getItem('isAdmin') === 'true';
+    console.log('isAdmin:', isAdmin); // Verify this value
+
     localStorage.removeItem('token');
     localStorage.removeItem('email');
-
-    const isAdmin = localStorage.getItem('isAdmin') === 'true';
     if (isAdmin) {
       window.location.href = '/admin-login';
     } else {

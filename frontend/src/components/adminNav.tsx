@@ -13,7 +13,7 @@ const Navbar: React.FC = () => {
     <nav className="bg-blue-500 p-4 fixed top-0 left-0 w-full z-50 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-20">
-          <img src="/public/DirectEd Development Logo horizontal white.png" alt="Logo" className="h-10 w-auto hover:scale-80 cursor-pointer" />
+          <img src="/DirectEd Development Logo horizontal white.png" alt="Logo" className="h-10 w-auto hover:scale-80 cursor-pointer" />
           <h1 className="text-white text-xl font-bold hidden md:block cursor-pointer">Admin Panel</h1>
         </div>
         <div className="md:hidden">

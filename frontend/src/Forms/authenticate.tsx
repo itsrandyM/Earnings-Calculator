@@ -10,7 +10,7 @@ const AuthForm: React.FC = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100 p-6">
       <div className="max-w-4xl w-full bg-white shadow-md rounded-lg flex flex-col md:flex-row">
         <div className="md:w-1/3 p-6 bg-blue-500 flex items-center justify-center">
-        <img src="/public/DirectEd Development Logo horizontal white.png" alt="Logo" className="h-10 w-auto" />
+        <img src="/DirectEd Development Logo horizontal white.png" alt="Logo" className="h-10 w-auto" />
         </div>
         <div className="md:w-2/3 p-6">
           <h2 className="text-2xl font-bold mb-4">{isSignUp ? 'Sign Up' : 'Login'}</h2>
