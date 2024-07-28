@@ -19,7 +19,6 @@ apiClient.interceptors.request.use(
   }
 );
 
-
 const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
   const navigate = useNavigate();
 
@@ -29,32 +28,38 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
         return response;
       },
       (error) => {
-        if (error.response && error.response.status === 401) {
-          // Handle unauthorized access
-          localStorage.removeItem('token');
-          localStorage.removeItem('email')
-          
-          const isAdmin = localStorage.getItem('isAdmin') === 'true';
-          if (isAdmin) {
-             navigate('/admin-login');
-             alert('Token has expired. Please login again.');
-          } else {
-            navigate('/');
-            alert('Token has expired. Please login again.');
+        if (error.response) {
+          const { status, data } = error.response;
+          const message = data.message || '';
+
+          if (status === 401 && message === 'Token has expired. Please log in again.') {
+            // Handle expired token
+            const isAdmin = localStorage.getItem('isAdmin') === 'true';
+            console.log('isAdmin:', isAdmin); // Verify this value
+
+            localStorage.removeItem('token');
+            localStorage.removeItem('email');
+            alert('Token has expired. Please log in again.');
+
+           // Verify this value
+            if (isAdmin) {
+              navigate('/admin-login');
+            } else {
+              navigate('/');
+            }
           }
-        
         }
         return Promise.reject(error);
       }
     );
     return () => {
       apiClient.interceptors.response.eject(interceptor);
+      localStorage.removeItem('isAdmin');
     };
   }, [navigate]);
 
   return children;
 };
-
 
 
 export default apiClient;

@@ -212,16 +212,10 @@ const LoginForm: React.FC = () => {
       localStorage.setItem('email', data.email)
       // console.log('Login successful:', data);
       alert(data.message)
-
-      // // Decode token to access user data
-      // const decodedToken: { email: string } = jwtDecode(token);
-      // console.log('User email:', decodedToken.email);
-
-      // Redirect or update state after successful login
       navigate('/dash-user')
     }  catch (error) {
       if (error instanceof Error) {
-        setError(error.message);
+        setError('Error logging in. Use correct credentials');
       } else {
         setError('An unknown error occurred');
       }
@@ -230,7 +224,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {error && <div className="text-red-500">{error}</div>}
+      {error && <div className="text-red-500 border-red-900 bg-red-300 text-center font-bold">{error}</div>}
       <input
         type="email"
         placeholder="Email"

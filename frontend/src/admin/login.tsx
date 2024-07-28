@@ -22,16 +22,19 @@ const AdminLogin: React.FC = () => {
       localStorage.setItem('email', admin.email)
       // Store the token in localStorage
       
-      const storeToken = (token: string, isAdmin = false) => {
+      const storeToken = (token: string, isAdmin: boolean = false) => {
         localStorage.setItem('token', token);
         localStorage.setItem('isAdmin', isAdmin ? 'true' : 'false');
       };
-
       storeToken(token, true);
+
+      const isAdmin = localStorage.getItem('isAdmin') === 'true';
+      console.log('isAdmin:', isAdmin);
 
       // Redirect to admin dashboard or homepage
       navigate('/admin-dashboard');
     }  catch (error) {
+      setError('Error logging in. Invalid Password or email');
     if (error instanceof Error) {
       throw new Error(error.message);
     } else if (typeof error === 'object' && error !== null && 'response' in error) {
@@ -52,7 +55,7 @@ const AdminLogin: React.FC = () => {
         <div className="md:w-2/3 p-6">
           <h2 className="text-2xl font-bold mb-4">Administrator Login</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && <div className="text-red-500">{error}</div>}
+            {error && <div className="text-red-500 border-red-900 bg-red-300">{error}</div>}
             <input
               type="email"
               placeholder="Email"

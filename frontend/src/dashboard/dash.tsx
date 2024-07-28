@@ -178,7 +178,7 @@ const AdminDashboard: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {selectedStudent.incomes.length > 0 ? (
                       selectedStudent.incomes
-                        // .filter((income: any) => income.month >= 1 && income.month <= 6)
+                        .filter((income: any) => income.month >= 1 && income.month <= 6)
                         .map((income: any, index: number) => (
                           <div
                             key={index}
@@ -223,7 +223,7 @@ const AdminDashboard: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {selectedStudent.incomes.length > 0 ? (
                       selectedStudent.incomes
-                        // .filter((income: any) => income.month >= 7 && income.month <= 12)
+                        .filter((income: any) => income.month >= 7 && income.month <= 12)
                         .map((income: any, index: number) => (
                           <div
                             key={index}
