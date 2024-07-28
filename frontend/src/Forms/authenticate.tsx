@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { login, signup } from './authService'; 
 // import jwtDecode from 'jwt-decode';
 
@@ -19,6 +19,7 @@ const AuthForm: React.FC = () => {
           ) : (
             <LoginForm />
           )}
+          <Link to={'/admin-login'} className='font-bold text-blue-700 mr-28'>Admin?</Link>
           <button 
             onClick={() => setIsSignUp(!isSignUp)} 
             className="text-blue-500 mt-4 hover:text-blue-800 hover:font-bold"
@@ -242,6 +243,7 @@ const LoginForm: React.FC = () => {
       <button type="submit" className="bg-blue-500 text-white p-2 rounded w-full">
         Login
       </button>
+      
     </form>
   );
 };
