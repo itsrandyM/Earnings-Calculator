@@ -49,7 +49,6 @@ const AxiosInterceptor = ({ children }: { children: React.ReactNode }) => {
     );
     return () => {
       apiClient.interceptors.response.eject(interceptor);
-      localStorage.removeItem('isAdmin')
     };
   }, [navigate]);
 
