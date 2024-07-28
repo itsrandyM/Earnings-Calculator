@@ -380,7 +380,7 @@ const IncomeEntry: React.FC = () => {
             'Authorization': `Bearer ${token}` 
           }
         });
-      console.log(response)
+      // console.log(response)
       setSuccessMessage('Income entry saved successfully.');
       setError(null);
       navigate('/dash-user')
@@ -440,7 +440,7 @@ const IncomeEntry: React.FC = () => {
                 <label className="block text-gray-700 mb-2">Currency</label>
                 <select
                   value={currency}
-                  onChange={(e) => setCurrency(e.target.value)}
+                  onChange={handleCurrencyChange}
                   className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
                 >
                   <option value="KES">Kenyan Shilling (KES)</option>

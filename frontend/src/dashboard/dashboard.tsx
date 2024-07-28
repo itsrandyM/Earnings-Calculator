@@ -7,6 +7,7 @@ interface Income {
   _id: string;
   userId: string;
   month: string;
+  currency:string;
   year: number;
   techJobEarnings: number;
   otherEarnings: number;
@@ -99,25 +100,25 @@ const UserDashboard: React.FC = () => {
                   <h2 className="text-lg font-bold mb-2">{`${income.month} ${income.year}`}</h2>
                   <div className="mb-2">
                     <p>
-                      <strong>Tech Job Income:</strong> ${income.techJobEarnings}
+                      <strong>Tech Job Income:</strong> {income.currency || '$'} {income.techJobEarnings}
                     </p> 
                     <p>
-                      <strong>Other Income:</strong> ${income.otherEarnings}
+                      <strong>Other Income:</strong> {income.currency} {income.otherEarnings}
                     </p>
                     <p>
-                      <strong>Total Income:</strong> ${income.totalEarnings}
+                      <strong>Total Income:</strong> {income.currency || '$'} {income.totalEarnings}
                     </p>
                   </div>
                   <div className="mb-2">
                     <p>
-                      <strong>Payable Tax:</strong> ${income.payableTax}
+                      <strong>Payable Tax:</strong> {income.currency || '$'} {income.payableTax}
                     </p>
                     <p>
-                      <strong>Earnings Subject to Income Sharing:</strong> $
+                      <strong>Earnings Subject to Income Sharing:</strong> {income.currency || '$'} 
                       {income.earningsSubjectToIncomeSharing}
                     </p>
                     <p>
-                      <strong>Amount Due to DirectEd:</strong> $
+                      <strong>Amount Due to DirectEd:</strong> {income.currency || '$'} 
                       {income.amountDueToDirectEd}
                     </p>
                   </div>

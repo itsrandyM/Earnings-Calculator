@@ -75,7 +75,7 @@ const SignUpForm: React.FC = () => {
       };
       storeToken(token, false);
       localStorage.setItem('email', data.email)
-      console.log('Signup successful:', data);
+      // console.log('Signup successful:', data);
       setMessage(data.message);
       alert(data.message)
       navigate('/dash-user')
@@ -210,7 +210,7 @@ const LoginForm: React.FC = () => {
       storeToken(token, false);
 
       localStorage.setItem('email', data.email)
-      console.log('Login successful:', data);
+      // console.log('Login successful:', data);
       alert(data.message)
 
       // // Decode token to access user data
