@@ -5,18 +5,18 @@ const cors = require('cors');
 const app = express();
 const corsOptions = require('./config/corsOptions')
 
+//cross-origins
+app.use(cors(corsOptions));
+app.options('*', cors(corsOptions)); 
+app.use(express.json());
+
 //Routes
 const AuthRouter = require('./routes/Auth')
 const userRouter = require('./routes/UserRoute')
 const incomeRouter = require('./routes/Income')
 const adminRoutes = require('./routes/AdminRoutes')
-// app.use(cors({
-//     origin: 'https://earnings-calculator.vercel.app/', 
-//     credentials: true, 
-//   }));
-app.use(cors(corsOptions));
-app.options('*', cors(corsOptions)); 
-app.use(express.json());
+
+
 
 const mongoUri = process.env.MONGO_URI;
 
