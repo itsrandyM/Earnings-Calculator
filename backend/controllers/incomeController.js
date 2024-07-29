@@ -108,19 +108,20 @@ exports.updateIncome = async (req, res) => {
 
 // Get all income entries for the authenticated user
 exports.getIncomesByUser = async (req, res) => {
-    try {
-      const userId = req.user.id;
-  
-      // Find all income entries for the user
-      const incomes = await Income.find({ userId }).sort({ createdAt: -1 });
-  
-      if (!incomes.length) {
-        return res.status(404).json({ message: 'No incomes found for this user.' });
-      }
-  
-      res.status(200).json(incomes);
-    } catch (error) {
-      console.error(error);
-      res.status(500).json({ message: 'Server error.' });
+  try {
+    const userId = req.user.id;
+
+    // Find all income entries for the user
+    const incomes = await Income.find({ userId }).sort({ createdAt: -1 });
+
+    // Instead of returning a 404, return an empty array with a 200 status
+    if (!incomes.length) {
+      return res.status(200).json([]); // Return an empty array
     }
-  };
+
+    res.status(200).json(incomes);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+};

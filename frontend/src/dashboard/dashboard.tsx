@@ -126,7 +126,7 @@ const UserDashboard: React.FC = () => {
               ))}
             </div>
           ) : (
-            <p>No income data available.</p>
+            <p className='text-red-600 text-center'>No income data available.</p>
           )}
         </div>
       </div>
