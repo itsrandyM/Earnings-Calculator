@@ -1,6 +1,10 @@
 // corsOptions.js
 
-const allowedOrigins = ['https://earnings-calculator.vercel.app', 'http://localhost:5173'];
+const allowedOrigins = [
+  'https://earnings-calculator.vercel.app', 
+  'http://localhost:5173',
+  'https://66a74ba149e18b0008de12ba--directedpay.netlify.app'
+];
 
 const corsOptions = (req, callback) => {
     console.log('Request Origin:', req.header('Origin'));
