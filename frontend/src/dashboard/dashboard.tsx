@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import apiClient from '../apiClient';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FiTrash } from "react-icons/fi";
 import DeleteIncomeModal from '../components/deleteModal';
 
@@ -93,7 +93,7 @@ const UserDashboard: React.FC = () => {
     );
   }
 
-  if (error) return <p className="text-red-500">{error}</p>;
+  // if (error) return <p className="text-red-500">{error}</p>;
 
   // Extract the first letter of the email
   const emailInitial = email ? email.charAt(0).toUpperCase() : '?';
@@ -105,9 +105,11 @@ const UserDashboard: React.FC = () => {
         <h1 className="text-2xl font-bold mb-4">User Dashboard</h1>
         <div className="bg-white shadow-md p-4 mb-6 w-full max-w-lg flex items-center justify-center">
           <div className="flex items-center space-x-4">
-            <div className="w-10 h-10 flex items-center justify-center bg-blue-500 text-white rounded-full font-bold text-lg">
+            <Link to={'/user-profile'}
+            state={{ userId: incomes[0]?.userId }}
+            className="w-10 h-10 flex items-center justify-center bg-blue-500 text-white rounded-full font-bold text-lg">
               {emailInitial}
-            </div>
+            </Link>
             <p className="text-lg font-medium text-gray-700">{email}</p>
           </div>
         </div>
