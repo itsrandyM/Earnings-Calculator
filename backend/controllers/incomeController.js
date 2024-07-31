@@ -2,6 +2,7 @@ const Income =  require('../models/Income')
 const User = require('../models/User')
 const mongoose = require('mongoose')
 const IncomeUpdateRequest = require('../models/updateRequest')
+const bcrypt = require('bcrypt')
 
 
 
@@ -165,22 +166,39 @@ exports.updateIncome = async (req, res) => {
     }
   };
   
-  // Delete an income entry
   exports.deleteIncome = async (req, res) => {
     try {
       const { id } = req.params;
+      const { password } = req.body; // Password should be in the request body
   
       // Validate the ID
       if (!mongoose.Types.ObjectId.isValid(id)) {
         return res.status(400).json({ message: 'Invalid income ID.' });
       }
   
-      // Delete the income entry
-      const income = await Income.findByIdAndDelete(id);
+      // Retrieve the income entry
+      const income = await Income.findById(id);
   
       if (!income) {
         return res.status(404).json({ message: 'Income not found.' });
       }
+  
+      // Retrieve the user
+      const user = await User.findById(income.userId); // Assuming the income model has a reference to the user
+  
+      if (!user) {
+        return res.status(404).json({ message: 'User not found.' });
+      }
+  
+      // Verify the password
+      const isPasswordMatch = await bcrypt.compare(password, user.password);
+  
+      if (!isPasswordMatch) {
+        return res.status(401).json({ message: 'Invalid password.' });
+      }
+  
+      // Delete the income entry
+      await Income.findByIdAndDelete(id);
   
       res.status(204).end(); // No content
     } catch (error) {
@@ -188,6 +206,31 @@ exports.updateIncome = async (req, res) => {
       res.status(500).json({ message: 'Server error.' });
     }
   };
+
+  // Delete an income entry
+  // exports.deleteIncome = async (req, res) => {
+  //   try {
+  //     const { id } = req.params;
+  
+  //     // Validate the ID
+  //     if (!mongoose.Types.ObjectId.isValid(id)) {
+  //       return res.status(400).json({ message: 'Invalid income ID.' });
+  //     }
+  
+  //     // Delete the income entry
+  //     const income = await Income.findByIdAndDelete(id);
+  
+  //     if (!income) {
+  //       return res.status(404).json({ message: 'Income not found.' });
+  //     }
+  
+  //     res.status(204).end(); // No content
+  //   } catch (error) {
+  //     console.error(error);
+  //     res.status(500).json({ message: 'Server error.' });
+  //   }
+  // };
+
 
   exports.getIncomeById = async (req, res) => {
     try {

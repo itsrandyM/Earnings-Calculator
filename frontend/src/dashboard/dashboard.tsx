@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar';
 import apiClient from '../apiClient';
 import LoadingSpinner from '../components/LoadingSpinner';
 import { useNavigate } from 'react-router-dom';
+import { FiTrash } from "react-icons/fi";
+import DeleteIncomeModal from '../components/deleteModal';
 
 interface Income {
   _id: string;
@@ -23,6 +25,9 @@ const UserDashboard: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [email, setEmail] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false)
+  const [selectedIncomeId, setSelectedIncomeId] = useState<string | null>(null);;
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -64,6 +69,21 @@ const UserDashboard: React.FC = () => {
     }, 3000);
     return () => clearTimeout(timer);
   }, []);
+
+
+  const handleDeleteSuccess = (incomeId: string) => {
+    setIncomes(incomes.filter(income => income._id !== incomeId));
+  };
+
+  const openDeleteModal = (incomeId: string) => {
+    setSelectedIncomeId(incomeId);
+    setShowDeleteModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setShowDeleteModal(false);
+    setSelectedIncomeId(null);
+  };
 
   if (loading) {
     return (
@@ -124,12 +144,17 @@ const UserDashboard: React.FC = () => {
                       {income.amountDueToDirectEd}
                     </p>
                   </div>
+                  <div className='flex justify-between'>
                   <button
             className="mt-2 bg-blue-500 text-white py-1 px-3 rounded-lg hover:bg-blue-600"
             onClick={() => navigate(`/income-edit/${income._id}`)}
           >
             Edit
           </button>
+          <button  onClick={() => openDeleteModal(income._id)}>
+            <FiTrash className='text-red-500 text-2xl'/>
+          </button>
+          </div>
                 </div>
               ))}
             </div>
@@ -138,6 +163,13 @@ const UserDashboard: React.FC = () => {
           )}
         </div>
       </div>
+      {showDeleteModal && selectedIncomeId && (
+        <DeleteIncomeModal
+          incomeId={selectedIncomeId}
+          onClose={closeDeleteModal}
+          onDeleteSuccess={handleDeleteSuccess}
+        />
+      )}
     </div>
   );
 };

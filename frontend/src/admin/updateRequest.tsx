@@ -19,22 +19,22 @@ interface Income {
 interface UpdateRequest {
   _id: string;
   incomeId: Income;
-  userId: string;
+  userId: User;
   originalData: Income;
   updatedData: Income;
   context: string;
   status: string;
 }
 
-// interface User {
-//          _id: string;
-//         firstName:string
-//         middleName:string,
-//         lastName: string,
-//         email: string,
-//         countryOfResidence:string,
-//         cohortYear: number,
-//       }
+interface User {
+         _id: string;
+        firstName:string
+        middleName:string,
+        lastName: string,
+        email: string,
+        countryOfResidence:string,
+        cohortYear: number,
+      }
 
 const AdminUpdateRequest: React.FC = () => {
   const [requests, setRequests] = useState<UpdateRequest[]>([]);
