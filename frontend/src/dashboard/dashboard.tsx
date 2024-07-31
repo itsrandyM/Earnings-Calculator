@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import apiClient from '../apiClient';
 import LoadingSpinner from '../components/LoadingSpinner';
+import { useNavigate } from 'react-router-dom';
 
 interface Income {
   _id: string;
@@ -22,6 +23,7 @@ const UserDashboard: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(true);
   const [email, setEmail] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchIncomes = async () => {
@@ -89,13 +91,13 @@ const UserDashboard: React.FC = () => {
             <p className="text-lg font-medium text-gray-700">{email}</p>
           </div>
         </div>
-        <div className="w-full  bg-white shadow-md rounded-lg p-6">
+        <div className="w-full  bg-white shadow-md  p-6">
           {incomes.length > 0 ? (
             <div  className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {incomes.map((income) => (
                 <div
                   key={income._id}
-                  className="bg-gray-100 p-4 border rounded-lg shadow-md"
+                  className="bg-gray-100 p-4 border shadow-md"
                 >
                   <h2 className="text-lg font-bold mb-2">{`${income.month} ${income.year}`}</h2>
                   <div className="mb-2">
@@ -122,6 +124,12 @@ const UserDashboard: React.FC = () => {
                       {income.amountDueToDirectEd}
                     </p>
                   </div>
+                  <button
+            className="mt-2 bg-blue-500 text-white py-1 px-3 rounded-lg hover:bg-blue-600"
+            onClick={() => navigate(`/income-edit/${income._id}`)}
+          >
+            Edit
+          </button>
                 </div>
               ))}
             </div>

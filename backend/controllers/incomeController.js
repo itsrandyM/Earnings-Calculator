@@ -1,16 +1,18 @@
 const Income =  require('../models/Income')
 const User = require('../models/User')
 const mongoose = require('mongoose')
+const IncomeUpdateRequest = require('../models/updateRequest')
 
-//Create income entry
+
+
 exports.createIncome = async (req, res) => {
   try {
-    const { month, year, currency, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd } = req.body;
+    const { incomeData } = req.body;
     const userId = req.user.id;
 
     // Validate the required fields
-    if (!month || !year) {
-      return res.status(400).json({ message: 'Month and year are required.' });
+    if (!incomeData || !Array.isArray(incomeData) || incomeData.length === 0) {
+      return res.status(400).json({ message: 'Income data is required and should be a non-empty array.' });
     }
 
     // Check if the user exists
@@ -19,20 +21,124 @@ exports.createIncome = async (req, res) => {
       return res.status(404).json({ message: 'User not found.' });
     }
 
-    // Create and save the new income entry
-    const income = new Income({ userId, month, year, currency, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd });
-    await income.save();
+    // Array to hold the created income entries
+    const createdIncomes = [];
 
-    // Add the new income ID to the user's incomes array
-    user.incomes.push(income._id);
+    // Loop through each income entry in the array
+    for (const incomeEntry of incomeData) {
+      const {
+        month,
+        year,
+        currency,
+        techJobEarnings,
+        otherEarnings,
+        totalEarnings,
+        payableTax,
+        earningsSubjectToIncomeSharing,
+        amountDueToDirectEd,
+      } = incomeEntry;
+
+      // Validate the required fields for each entry
+      if (!month || !year) {
+        return res.status(400).json({ message: 'Month and year are required for each income entry.' });
+      }
+
+      // Create and save the new income entry
+      const income = new Income({
+        userId,
+        month,
+        year,
+        currency,
+        techJobEarnings,
+        otherEarnings,
+        totalEarnings,
+        payableTax,
+        earningsSubjectToIncomeSharing,
+        amountDueToDirectEd,
+      });
+      await income.save();
+
+      // Add the new income ID to the user's incomes array
+      user.incomes.push(income._id);
+
+      // Add the created income to the list
+      createdIncomes.push(income);
+    }
+
+    // Save the user after updating their incomes array
     await user.save();
 
-    res.status(201).json(income);
+    // Return the array of created income entries
+    res.status(201).json(createdIncomes);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Server error.' });
   }
 };
+
+//Create income entry
+// exports.createIncome = async (req, res) => {
+//   try {
+//     const { month, year, currency, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd } = req.body;
+//     const userId = req.user.id;
+
+//     // Validate the required fields
+//     if (!month || !year) {
+//       return res.status(400).json({ message: 'Month and year are required.' });
+//     }
+
+//     // Check if the user exists
+//     const user = await User.findById(userId);
+//     if (!user) {
+//       return res.status(404).json({ message: 'User not found.' });
+//     }
+
+//     // Create and save the new income entry
+//     const income = new Income({ userId, month, year, currency, techJobEarnings, otherEarnings, totalEarnings, payableTax, earningsSubjectToIncomeSharing, amountDueToDirectEd });
+//     await income.save();
+
+//     // Add the new income ID to the user's incomes array
+//     user.incomes.push(income._id);
+//     await user.save();
+
+//     res.status(201).json(income);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ message: 'Server error.' });
+//   }
+// };
+
+exports.requestIncomeUpdate = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const updates = req.body;
+
+    // Validate the ID
+    if (!mongoose.Types.ObjectId.isValid(id)) {
+      return res.status(400).json({ message: 'Invalid income ID.' });
+    }
+
+    const income = await Income.findById(id);
+    if (!income) {
+      return res.status(404).json({ message: 'Income not found.' });
+    }
+
+    const updateRequest = new IncomeUpdateRequest({
+      incomeId: id,
+      userId: req.user.id,
+      originalData: income.toObject(),
+      updatedData: updates,
+      context: updates.context || '',
+    });
+
+    await updateRequest.save();
+    res.status(200).json({ message: 'Update request submitted successfully.' });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+};
+
 
   // Update an income entry
 exports.updateIncome = async (req, res) => {

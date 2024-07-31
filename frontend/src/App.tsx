@@ -6,6 +6,8 @@ import IncomeEntry from "./Forms/income-entry";
 import UserDashboard from "./dashboard/dashboard";
 import AdminLogin from "./admin/login";
 import { AxiosInterceptor } from "./apiClient";
+import EditIncome from "./Forms/income-edit";
+import AdminUpdateRequest from "./admin/updateRequest";
 
 function App() {
   return (
@@ -15,9 +17,10 @@ function App() {
             <Route path='/' element={<AuthForm/>}></Route>
             <Route path='/admin-login' element={<AdminLogin/>}></Route>
             <Route path='/admin-dashboard' element={<AdminDashboard/>}></Route>
-            {/* <Route path='/companies' element={<Companies/>}></Route> */}
+            <Route path='/income-edit/:id' element={<EditIncome/>}></Route>
             <Route path="/income-entry" element={<IncomeEntry />} />
             <Route path="/dash-user" element={<UserDashboard />} />
+            <Route path="/update-requests" element={<AdminUpdateRequest />} />
         </Routes>
         </AxiosInterceptor>
     </Router>

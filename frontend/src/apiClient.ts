@@ -3,14 +3,14 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const apiClient = axios.create({
-  baseURL: 'https://earnings-calculator-backend.onrender.com/', 
+  baseURL: 'http://localhost:4000', 
 });
 
 apiClient.interceptors.request.use(
   (config) => {
-    const token = localStorage.getItem('token'); // Get the token from localStorage
+    const token = localStorage.getItem('token'); 
     if (token) {
-      config.headers.Authorization = `Bearer ${token}`; // Add the token to headers
+      config.headers.Authorization = `Bearer ${token}`; 
     }
     return config;
   },

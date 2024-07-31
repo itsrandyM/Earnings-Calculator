@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import LogoutButton from '../buttons/logout';
+import usePendingRequestsCount from '../hooks/usePendingRequests';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const { pendingCount, error } = usePendingRequestsCount();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);
@@ -13,14 +15,17 @@ const Navbar: React.FC = () => {
     <nav className="bg-blue-500 p-4 fixed top-0 left-0 w-full z-50 shadow-md">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-20">
-          <img src="/DirectEd Development Logo horizontal white.png" alt="Logo" className="h-10 w-auto hover:scale-80 cursor-pointer" />
-          <h1 className="text-white text-xl font-bold hidden md:block cursor-pointer">Admin Panel</h1>
+          <img
+            src="/DirectEd Development Logo horizontal white.png"
+            alt="Logo"
+            className="h-10 w-auto hover:scale-80 cursor-pointer"
+          />
+          <h1 className="text-white text-xl font-bold hidden md:block cursor-pointer">
+            Admin Panel
+          </h1>
         </div>
         <div className="md:hidden">
-          <button
-            onClick={toggleMenu}
-            className="text-white focus:outline-none"
-          >
+          <button onClick={toggleMenu} className="text-white focus:outline-none">
             <svg
               className="w-6 h-6"
               fill="none"
@@ -46,9 +51,21 @@ const Navbar: React.FC = () => {
             </svg>
           </button>
         </div>
-        <div className={`flex-col space-y-4 md:space-y-0 md:flex md:flex-row md:space-x-4 items-center ${isOpen ? 'flex' : 'hidden'} md:flex`}>
+        <div
+          className={`flex-col space-y-4 md:space-y-0 md:flex md:flex-row md:space-x-10 items-center ${
+            isOpen ? 'flex' : 'hidden'
+          } md:flex`}
+        >
           <Link to="/admin-dashboard" className="text-white hover:underline">
             Dashboard
+          </Link>
+          <Link to="/update-requests" className="text-white hover:underline relative ">
+            Update Requests
+            {pendingCount > 0 && (
+              <span className="absolute top-0 right-0 mt-0 -mr-6 bg-red-600 text-white rounded-full px-2 text-xs">
+                {pendingCount}
+              </span>
+            )}
           </Link>
           <LogoutButton />
         </div>

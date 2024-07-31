@@ -5,6 +5,7 @@ const User = require('../models/User');
 const adminMiddleware = require('../middleware/admin');
 const Admin = require('../models/Admin');
 const jwt = require('jsonwebtoken');
+const IncomeUpdateRequest = require('../models/updateRequest')
 
 // routes/adminAuth.js
 
@@ -21,6 +22,48 @@ router.post('/login/admin', async (req, res) => {
     return res.status(201).json({ message:'Login successful!', admin , token });
   } catch (err) {
     res.status(500).json({ message: err.message });
+  }
+});
+
+router.get('/update-requests' ,adminMiddleware,async (req, res) => {
+  try {
+    const requests = await IncomeUpdateRequest.find({ status: { $ne: 'approved' } }).populate('incomeId').populate('userId').sort({ createdAt: -1 });
+    res.status(200).json(requests);
+    console.log(requests)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+});
+
+router.post('/update-request/:requestId' , adminMiddleware,async (req, res) => {
+  try {
+    const { requestId } = req.params;
+    const { action } = req.body; // 'approve' or 'reject'
+
+    const updateRequest = await IncomeUpdateRequest.findById(requestId);
+    if (!updateRequest) {
+      return res.status(404).json({ message: 'Update request not found.' });
+      // return res.status(200).json([]);
+    }
+
+    if (action === 'approve') {
+      await Income.findByIdAndUpdate(updateRequest.incomeId, updateRequest.updatedData, {
+        new: true,
+        runValidators: true,
+      });
+      updateRequest.status = 'approved';
+    } else if (action === 'reject') {
+      updateRequest.status = 'rejected';
+    } else {
+      return res.status(400).json({ message: 'Invalid action.' });
+    }
+
+    await updateRequest.save();
+    res.status(200).json({ message: `Income update request ${action}ed successfully.` });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
   }
 });
 
@@ -75,6 +118,16 @@ router.get('/students/:id', adminMiddleware, async (req, res) => {
     } catch (err) {
       console.error(err);
       res.status(500).json({ message: 'Server error' });
+    }
+  });
+
+  router.get('/update-requests-count', adminMiddleware, async (req, res) => {
+    try {
+      const count = await IncomeUpdateRequest.countDocuments({ status: 'pending' });
+      res.status(200).json({ count });
+    } catch (error) {
+      console.error(error);
+      res.status(500).json({ message: 'Server error.' });
     }
   });
 

@@ -10,7 +10,7 @@ const Navbar: React.FC = () => {
   };
 
   return (
-    <nav className="bg-blue-500 p-4 fixed top-0 left-0 w-full z-50 shadow-md">
+    <nav className="bg-blue-500 p-4 fixed top-0 left-0 w-full z-50 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
         <div className="flex items-center space-x-10">
           <img src="/DirectEd Development Logo horizontal white.png" alt="Logo" className="h-10 w-auto" />
