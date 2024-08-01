@@ -13,6 +13,8 @@ const incomeSchema = new Schema({
   payableTax: Number,
   earningsSubjectToIncomeSharing: Number,
   amountDueToDirectEd: Number,
+  link:String,
+  comment:String
 },
 {timestamps:true}
 );

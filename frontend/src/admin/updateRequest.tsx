@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import apiClient from '../apiClient';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Navbar from '../components/adminNav';
+import { MdOutlinePending } from "react-icons/md";
 
 interface Income {
   _id: string;
@@ -27,14 +28,14 @@ interface UpdateRequest {
 }
 
 interface User {
-         _id: string;
-        firstName:string
-        middleName:string,
-        lastName: string,
-        email: string,
-        countryOfResidence:string,
-        cohortYear: number,
-      }
+  _id: string;
+  firstName: string;
+  middleName: string;
+  lastName: string;
+  email: string;
+  countryOfResidence: string;
+  cohortYear: number;
+}
 
 const AdminUpdateRequest: React.FC = () => {
   const [requests, setRequests] = useState<UpdateRequest[]>([]);
@@ -97,66 +98,69 @@ const AdminUpdateRequest: React.FC = () => {
       </div>
     );
   }
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (error) return <p className="text-red-600 text-center">{error}</p>;
 
   return (
-    <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6 pt-28">
-        <Navbar />
-        <div>
-      <h1 className="text-2xl font-bold mb-4"></h1>
-      {requests.length > 0 ? (
-        <div className="w-full max-w-4xl">
-          {requests.map((request) => (
-            <div key={request._id} className="bg-white shadow-md p-4 mb-6 rounded-lg">
-                <div className='flex justify-between'>
-              <h2 className="text-lg font-bold mb-2">Income Update Request: {request.userId.firstName} {request.userId.lastName}</h2>
-              <h3>{request.status}</h3>
+    <div className="min-h-screen flex flex-col items-center bg-gray-50 p-6 pt-28">
+      <Navbar />
+      <div className="w-full max-w-4xl bg-white shadow-md rounded-lg p-6">
+        <h1 className="text-2xl font-bold mb-4 text-gray-800">Update Requests</h1>
+        {requests.length > 0 ? (
+          requests.map((request) => (
+            <div key={request._id} className="bg-white shadow-md rounded-lg p-6 mb-6 border border-gray-200">
+              <div className='flex justify-between items-center mb-4'>
+                <h2 className="text-lg font-semibold text-gray-700">
+                  Income Update Request: {request.userId.firstName} {request.userId.lastName}
+                </h2>
+                <div className='flex items-center border p-2 bg-gray-100 rounded'>
+                  <MdOutlinePending className='text-2xl text-gray-600 mr-2' />
+                  <h3 className='text-md font-medium text-gray-600'>{request.status}</h3>
+                </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
-                  <h3 className="font-bold">Original Income Data</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Original Income Data</h3>
                   <p><strong>Month:</strong> {request.originalData.month}</p>
                   <p><strong>Year:</strong> {request.originalData.year}</p>
-                  <p><strong>Tech Job Income:</strong> {request.originalData.currency} {request.originalData.techJobEarnings}</p>
-                  <p><strong>Other Income:</strong> {request.originalData.currency} {request.originalData.otherEarnings}</p>
-                  <p><strong>Total Income:</strong> {request.originalData.currency} {request.originalData.totalEarnings}</p>
-                  <p><strong>Payable Tax:</strong> {request.originalData.currency} {request.originalData.payableTax}</p>
-                  <p><strong>Earnings Subject to Income Sharing:</strong> {request.originalData.currency} {request.originalData.earningsSubjectToIncomeSharing}</p>
-                  <p><strong>Amount Due to DirectEd:</strong> {request.originalData.currency} {request.originalData.amountDueToDirectEd}</p>
+                  <p><strong>Tech Job Income:</strong> {request.originalData.currency} {request.originalData.techJobEarnings.toFixed(2)}</p>
+                  <p><strong>Other Income:</strong> {request.originalData.currency} {request.originalData.otherEarnings.toFixed(2)}</p>
+                  <p><strong>Total Income:</strong> {request.originalData.currency} {request.originalData.totalEarnings.toFixed(2)}</p>
+                  <p><strong>Payable Tax:</strong> {request.originalData.currency} {request.originalData.payableTax.toFixed(2)}</p>
+                  <p><strong>Earnings Subject to Income Sharing:</strong> {request.originalData.currency} {request.originalData.earningsSubjectToIncomeSharing.toFixed(2)}</p>
+                  <p><strong>Amount Due to DirectEd:</strong> {request.originalData.currency} {request.originalData.amountDueToDirectEd.toFixed(2)}</p>
                 </div>
-                <div className="bg-gray-100 p-4 rounded-lg shadow-sm">
-                  <h3 className="font-bold">Updated Income Data</h3>
+                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                  <h3 className="text-lg font-semibold text-gray-800 mb-2">Updated Income Data</h3>
                   <p><strong>Month:</strong> {request.updatedData.month}</p>
                   <p><strong>Year:</strong> {request.updatedData.year}</p>
-                  <p><strong>Tech Job Income:</strong> {request.updatedData.currency} {request.updatedData.techJobEarnings}</p>
-                  <p><strong>Other Income:</strong> {request.updatedData.currency} {request.updatedData.otherEarnings}</p>
-                  <p><strong>Total Income:</strong> {request.updatedData.currency} {request.updatedData.totalEarnings}</p>
-                  <p><strong>Payable Tax:</strong> {request.updatedData.currency} {request.updatedData.payableTax}</p>
-                  <p><strong>Earnings Subject to Income Sharing:</strong> {request.updatedData.currency} {request.updatedData.earningsSubjectToIncomeSharing}</p>
-                  <p><strong>Amount Due to DirectEd:</strong> {request.updatedData.currency} {request.updatedData.amountDueToDirectEd}</p>
+                  <p><strong>Tech Job Income:</strong> {request.updatedData.currency} {request.updatedData.techJobEarnings.toFixed(2)}</p>
+                  <p><strong>Other Income:</strong> {request.updatedData.currency} {request.updatedData.otherEarnings.toFixed(2)}</p>
+                  <p><strong>Total Income:</strong> {request.updatedData.currency} {request.updatedData.totalEarnings.toFixed(2)}</p>
+                  <p><strong>Payable Tax:</strong> {request.updatedData.currency} {request.updatedData.payableTax.toFixed(2)}</p>
+                  <p><strong>Earnings Subject to Income Sharing:</strong> {request.updatedData.currency} {request.updatedData.earningsSubjectToIncomeSharing.toFixed(2)}</p>
+                  <p><strong>Amount Due to DirectEd:</strong> {request.updatedData.currency} {request.updatedData.amountDueToDirectEd.toFixed(2)}</p>
                 </div>
               </div>
-              <p className="mt-2"><strong>Context:</strong> {request.context}</p>
-              <div className="flex space-x-4 mt-4">
+              <p className="mb-4"><strong>Context:</strong> {request.context}</p>
+              <div className="flex space-x-4">
                 <button
                   onClick={() => handleProcessRequest(request._id, 'approve')}
-                  className="bg-green-500 text-white py-2 px-4 rounded-lg hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:outline-none"
+                  className="bg-green-500 text-white py-2 px-4 rounded-lg shadow-md hover:bg-green-600 focus:ring-2 focus:ring-green-500 focus:outline-none transition"
                 >
                   Approve
                 </button>
                 <button
                   onClick={() => handleProcessRequest(request._id, 'reject')}
-                  className="bg-red-500 text-white py-2 px-4 rounded-lg hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:outline-none"
+                  className="bg-red-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-red-700 focus:ring-2 focus:ring-red-500 focus:outline-none transition"
                 >
                   Reject
                 </button>
               </div>
             </div>
-          ))}
-        </div>
-      ) : (
-        <p className='font-bold text-lg align-middle'>No pending update requests!</p>
-      )}
+          ))
+        ) : (
+          <p className='font-bold text-lg text-center text-gray-700'>No pending update requests!</p>
+        )}
       </div>
     </div>
   );

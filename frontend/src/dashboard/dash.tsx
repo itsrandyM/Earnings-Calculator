@@ -25,11 +25,11 @@ const AdminDashboard: React.FC = () => {
             Authorization: `Bearer ${token}`,
           },
         });
-        // console.log(response);
+        console.log(response);
         setStudents(response.data);
       } catch (error) {
         console.error('Error fetching students:', error);
-        setError("Error fetching data")
+        setError('Error fetching data');
       }
     };
 
@@ -78,6 +78,21 @@ const AdminDashboard: React.FC = () => {
       student.countryOfResidence === selectedCountry &&
       student.cohortYear === selectedYear
   );
+
+  const monthNameToNumber = {
+    January: 1,
+    February: 2,
+    March: 3,
+    April: 4,
+    May: 5,
+    June: 6,
+    July: 7,
+    August: 8,
+    September: 9,
+    October: 10,
+    November: 11,
+    December: 12,
+  };
 
   // Extract the first letter of the email
   const emailInitial = email ? email.charAt(0).toUpperCase() : '?';
@@ -164,7 +179,8 @@ const AdminDashboard: React.FC = () => {
                   <div>
                     <p className="mt-4 font-bold">Parent/Guardian Details:</p>
                     <p>
-                      <strong>Name:</strong> {selectedStudent.parentFirstName} {selectedStudent.parentMiddleName} {selectedStudent.parentLastName}
+                      <strong>Name:</strong> {selectedStudent.parentFirstName}{' '}
+                      {selectedStudent.parentMiddleName} {selectedStudent.parentLastName}
                     </p>
                     <p>
                       <strong>Email:</strong> {selectedStudent.parentEmail}
@@ -179,43 +195,71 @@ const AdminDashboard: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {selectedStudent.incomes.length > 0 ? (
                       selectedStudent.incomes
-                        .filter((income: any) => income.month >= 1 && income.month <= 6)
+                        .filter((income: any) => {
+                          const monthNumber =
+                            monthNameToNumber[income.month as keyof typeof monthNameToNumber];
+                          return monthNumber >= 1 && monthNumber <= 6;
+                        })
                         .map((income: any, index: number) => (
                           <div
                             key={index}
-                            className="bg-blue-100 p-4 border rounded-lg shadow-md transition transform hover:scale-105"
+                            className="bg-white p-4 border border-gray-200 rounded-lg shadow-lg transition transform hover:scale-105"
                           >
-                            <p className="font-semibold mb-2">
+                            <p className="font-bold mb-2">
                               {income.month || 'N/A'} {income.year || 'N/A'}
                             </p>
-                            <p className="mb-1">
-                              <strong>Projected Income:</strong>
-                            </p>
-                            <p className="text-sm">
-                              Tech Job - {income.currency} {income.techJobEarnings || 'N/A'}, Other - {income.currency} {income.otherEarnings || 'N/A'}
-                            </p>
-                            <p className="mt-2 mb-1">
-                              <strong>Actual Income:</strong>
-                            </p>
-                            <p className="text-sm">
-                              Tech Job - {income.currency} {income.techJobEarnings || 'N/A'}, Other - {income.currency} {income.otherEarnings || 'N/A'}
-                            </p>
-                            <p className="mt-2">
-                              <strong>Earnings Subject to Income Sharing:</strong>
-                            </p>
-                            <p className="text-sm">
-                              {income.currency} {income.earningsSubjectToIncomeSharing || 'N/A'}
-                            </p>
-                            <p className="mt-2">
-                              <strong>Amount Due to DirectEd:</strong>
-                            </p>
-                            <p className="text-sm">{income.currency} {income.amountDueToDirectEd || 'N/A'}</p>
+                            <div className="text-sm text-gray-700">
+                              <p className="mb-1">
+                                <strong>Projected Income:</strong>
+                              </p>
+                              <ul className="pl-4 list-disc">
+                                <li>
+                                  Tech Job - {income.currency} {income.techJobEarnings || 'N/A'}
+                                </li>
+                                <li>
+                                  Other - {income.currency} {income.otherEarnings || 'N/A'}
+                                </li>
+                              </ul>
+                              <p className="mt-2 mb-1">
+                                <strong>Actual Income:</strong>
+                              </p>
+                              <ul className="pl-4 list-disc">
+                                <li>
+                                  Tech Job - {income.currency} {income.techJobEarnings || 'N/A'}
+                                </li>
+                                <li>
+                                  Other - {income.currency} {income.otherEarnings || 'N/A'}
+                                </li>
+                              </ul>
+                              <p className="mt-2">
+                                <strong>Payable Tax:</strong> {income.currency}{' '}
+                                {income.payableTax || 'N/A'}
+                              </p>
+                              <p className="mt-2">
+                                <strong>Earnings Subject to Income Sharing:</strong> {income.currency}{' '}
+                                {income.earningsSubjectToIncomeSharing || 'N/A'}
+                              </p>
+                              <p className="mt-2">
+                                <strong>Amount Due to DirectEd:</strong> {income.currency}{' '}
+                                {income.amountDueToDirectEd || 'N/A'}
+                              </p>
+                              <p className="mt-2">
+                                <strong>Link:</strong>
+                              </p>
+                              <p className="text-sm break-words text-blue-600 underline cursor-pointer">
+                                {income.link || 'N/A'}
+                              </p>
+                              <p className="mt-2">
+                                <strong>Comment:</strong>
+                              </p>
+                              <p className="text-sm break-words text-gray-600">
+                                {income.comment || 'N/A'}
+                              </p>
+                            </div>
                           </div>
                         ))
                     ) : (
-                      <p className="text-center col-span-1 sm:col-span-2 text-red-500">
-                        No income data available.
-                      </p>
+                      <p className='text-red-500 '>No income data available for this period.</p>
                     )}
                   </div>
                 </div>
@@ -224,63 +268,88 @@ const AdminDashboard: React.FC = () => {
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {selectedStudent.incomes.length > 0 ? (
                       selectedStudent.incomes
-                        .filter((income: any) => income.month >= 7 && income.month <= 12)
+                        .filter((income: any) => {
+                          const monthNumber =
+                            monthNameToNumber[income.month as keyof typeof monthNameToNumber];
+                          return monthNumber >= 7 && monthNumber <= 12;
+                        })
                         .map((income: any, index: number) => (
                           <div
                             key={index}
-                            className="bg-blue-100 p-4 border rounded-lg shadow-md transition transform hover:scale-105"
+                            className="bg-white p-4 border border-gray-200 rounded-lg shadow-lg transition transform hover:scale-105"
                           >
-                            <p className="font-semibold mb-2">
+                            <p className="font-bold mb-2">
                               {income.month || 'N/A'} {income.year || 'N/A'}
                             </p>
-                            <p className="mb-1">
-                              <strong>Projected Income:</strong>
-                            </p>
-                            <p className="text-sm">
-                              Tech Job - {income.currency} {income.techJobEarnings || 'N/A'}, Other - {income.currency} 
-                              {income.otherEarnings || 'N/A'}
-                            </p>
-                            <p className="mt-2 mb-1">
-                              <strong>Actual Income:</strong>
-                            </p>
-                            <p className="text-sm">
-                              Tech Job - {income.currency} {income.techJobEarnings || 'N/A'}, Other - {income.currency} 
-                              {income.otherEarnings || 'N/A'}
-                            </p>
-                            <p className="mt-2">
-                              <strong>Earnings Subject to Income Sharing:</strong>
-                            </p>
-                            <p className="text-sm">
-                              {income.currency} {income.earningsSubjectToIncomeSharing || 'N/A'}
-                            </p>
-                            <p className="mt-2">
-                              <strong>Amount Due to DirectEd:</strong>
-                            </p>
-                            <p className="text-sm">{income.currency} {income.amountDueToDirectEd || 'N/A'}</p>
+                            <div className="text-sm text-gray-700">
+                              <p className="mb-1">
+                                <strong>Projected Income:</strong>
+                              </p>
+                              <ul className="pl-4 list-disc">
+                                <li>
+                                  Tech Job - {income.currency} {income.techJobEarnings || 'N/A'}
+                                </li>
+                                <li>
+                                  Other - {income.currency} {income.otherEarnings || 'N/A'}
+                                </li>
+                              </ul>
+                              <p className="mt-2 mb-1">
+                                <strong>Actual Income:</strong>
+                              </p>
+                              <ul className="pl-4 list-disc">
+                                <li>
+                                  Tech Job - {income.currency} {income.techJobEarnings || 'N/A'}
+                                </li>
+                                <li>
+                                  Other - {income.currency} {income.otherEarnings || 'N/A'}
+                                </li>
+                              </ul>
+                              <p className="mt-2">
+                                <strong>Payable Tax:</strong> {income.currency}{' '}
+                                {income.payableTax || 'N/A'}
+                              </p>
+                              <p className="mt-2">
+                                <strong>Earnings Subject to Income Sharing:</strong> {income.currency}{' '}
+                                {income.earningsSubjectToIncomeSharing || 'N/A'}
+                              </p>
+                              <p className="mt-2">
+                                <strong>Amount Due to DirectEd:</strong> {income.currency}{' '}
+                                {income.amountDueToDirectEd || 'N/A'}
+                              </p>
+                              <p className="mt-2">
+                                <strong>Link:</strong>
+                              </p>
+                              <p className="text-sm break-words text-blue-600 underline cursor-pointer">
+                                {income.link || 'N/A'}
+                              </p>
+                              <p className="mt-2">
+                                <strong>Comment:</strong>
+                              </p>
+                              <p className="text-sm break-words text-gray-600">
+                                {income.comment || 'N/A'}
+                              </p>
+                            </div>
                           </div>
                         ))
                     ) : (
-                      <p className="text-center col-span-1 sm:col-span-2 text-red-500">
-                        No income data available.
-                      </p>
+                      <p className='text-red-500'>No income data available for this period.</p>
                     )}
                   </div>
                 </div>
-
                 <button
                   onClick={() => setSelectedStudent(null)}
-                  className="bg-gray-500 text-white p-2 rounded mt-6 block mx-auto hover:bg-gray-600 transition"
+                  className="bg-red-500 text-white p-2 rounded m-2 mt-6 mx-auto block"
                 >
-                  Back
+                  Back to Students List
                 </button>
               </div>
             ) : (
-              <ul className="space-y-2">
-                {filteredStudents.map((student, index) => (
+              <ul className="space-y-4">
+                {filteredStudents.map((student) => (
                   <li
-                    key={index}
+                    key={student.id}
                     onClick={() => handleStudentClick(student)}
-                    className="cursor-pointer p-2 border-b border-gray-200 hover:bg-gray-100"
+                    className="p-4 bg-white rounded-lg shadow-md hover:bg-gray-100 cursor-pointer"
                   >
                     {student.firstName} {student.lastName}
                   </li>
@@ -295,3 +364,4 @@ const AdminDashboard: React.FC = () => {
 };
 
 export default AdminDashboard;
+

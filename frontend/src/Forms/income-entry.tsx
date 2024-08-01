@@ -14,6 +14,8 @@ const IncomeEntry: React.FC = () => {
   const [year, setYear] = useState('');
   const [halfYear, setHalfYear] = useState('');
   const [monthlyData, setMonthlyData] = useState<MonthlyData[]>(Array(6).fill({ techJob: 0, otherIncome: 0 }));
+  const [link, setLink] = useState('');
+  const [comment, setComment] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
 
@@ -122,7 +124,9 @@ const IncomeEntry: React.FC = () => {
           totalEarnings: totalIncome + otherIncome,
           payableTax,
           earningsSubjectToIncomeSharing,
-          amountDueToDirectEd
+          amountDueToDirectEd,
+          link,
+          comment
         };
       });
 
@@ -268,8 +272,29 @@ const IncomeEntry: React.FC = () => {
                     </div>
                   );
                 })}
+                 <div>
+              <label className="block text-gray-700 mb-2">Google Drive Link</label>
+              <input
+                type="text"
+                value={link}
+                placeholder='Set the sharing settings to make the files on this link viewable by all.'
+                onChange={(e) => setLink(e.target.value)}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
+            </div>
+            <div>
+              <label className="block text-gray-700 mb-2">Comment</label>
+              <textarea
+                value={comment}
+                onChange={(e) => setComment(e.target.value)}
+                className="w-full p-2 border rounded-lg focus:ring-2 focus:ring-blue-500 focus:outline-none"
+                rows={3}
+              />
+            </div>
               </div>
+
             )}
+           
             <button
               type="submit"
               className="bg-blue-500 text-white py-2 rounded-lg w-full hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"

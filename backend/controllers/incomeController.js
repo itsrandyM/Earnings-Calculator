@@ -37,6 +37,8 @@ exports.createIncome = async (req, res) => {
         payableTax,
         earningsSubjectToIncomeSharing,
         amountDueToDirectEd,
+        link,
+        comment
       } = incomeEntry;
 
       // Validate the required fields for each entry
@@ -56,6 +58,8 @@ exports.createIncome = async (req, res) => {
         payableTax,
         earningsSubjectToIncomeSharing,
         amountDueToDirectEd,
+        link,
+        comment
       });
       await income.save();
 

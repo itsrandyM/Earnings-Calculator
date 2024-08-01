@@ -15,6 +15,7 @@ interface Income {
   payableTax: number;
   earningsSubjectToIncomeSharing: number;
   amountDueToDirectEd: number;
+  link:string
 }
 
 const EditIncome: React.FC = () => {
@@ -117,7 +118,7 @@ const EditIncome: React.FC = () => {
     } else if (currency === 'ETB') {
       return calculateEthiopianPayableTax(monthlyIncome);
     }
-    return 0; // Default case, can add more currencies or handle errors
+    return 0; 
   };
 
   const updateCalculatedFields = (updatedIncome: Income) => {
@@ -287,6 +288,16 @@ const EditIncome: React.FC = () => {
               />
             </div>
             </div>
+            <div>
+              <label className="block text-gray-700 font-medium mb-1">
+                Google Drive Link
+              </label>
+              <input
+                type="text"
+                value={income.link}
+                className="w-full p-2 border bg-gray-100 rounded-lg focus:outline-none mt-3 cursor-not-allowed"
+              />
+            </div>
           </div>
           <button
             onClick={handleUpdate}
@@ -302,7 +313,7 @@ const EditIncome: React.FC = () => {
 };
 
 export default EditIncome;
-function setEmail(arg0: string) {
-  throw new Error('Function not implemented.');
-}
+// function setEmail(arg0: string) {
+//   throw new Error('Function not implemented.');
+// }
 
