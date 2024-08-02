@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Navbar from '../components/Navbar';
 import apiClient from '../apiClient';
 import LoadingSpinner from '../components/LoadingSpinner';
-import { Link, useNavigate } from 'react-router-dom';
+import {useNavigate } from 'react-router-dom';
 import { FiTrash } from "react-icons/fi";
 import DeleteIncomeModal from '../components/deleteModal';
 
