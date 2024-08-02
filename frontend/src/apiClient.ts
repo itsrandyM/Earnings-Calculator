@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 const apiClient = axios.create({
-  baseURL: 'http://localhost:4000', 
+  baseURL: 'https://earnings-calculator-backend.onrender.com', 
 });
 
 apiClient.interceptors.request.use(

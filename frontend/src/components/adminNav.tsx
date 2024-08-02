@@ -5,7 +5,7 @@ import usePendingRequestsCount from '../hooks/usePendingRequests';
 
 const Navbar: React.FC = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { pendingCount, error } = usePendingRequestsCount();
+  const { pendingCount} = usePendingRequestsCount();
 
   const toggleMenu = () => {
     setIsOpen(!isOpen);

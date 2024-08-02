@@ -105,11 +105,12 @@ const UserDashboard: React.FC = () => {
         <h1 className="text-2xl font-bold mb-4">User Dashboard</h1>
         <div className="bg-white shadow-md p-4 mb-6 w-full max-w-lg flex items-center justify-center">
           <div className="flex items-center space-x-4">
-            <Link to={'/user-profile'}
-            state={{ userId: incomes[0]?.userId }}
+            {/* <Link to={'/user-profile'} */}
+            {/* state={{ userId: incomes[0]?.userId }} */}
+            <p
             className="w-10 h-10 flex items-center justify-center bg-blue-500 text-white rounded-full font-bold text-lg">
-              {emailInitial}
-            </Link>
+              {emailInitial} </p>
+            {/* </Link> */}
             <p className="text-lg font-medium text-gray-700">{email}</p>
           </div>
         </div>
@@ -172,6 +173,7 @@ const UserDashboard: React.FC = () => {
           onDeleteSuccess={handleDeleteSuccess}
         />
       )}
+        {error && <p className="text-red-500 mt-2">{error}</p>}
     </div>
   );
 };
