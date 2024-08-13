@@ -5,6 +5,8 @@ import LoadingSpinner from '../components/LoadingSpinner';
 import Navbar from '../components/Navbar';
 import ErrorPage from '../Errors/errorPage';
 import { MdKeyboardArrowRight } from "react-icons/md";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 
 interface Income {
@@ -29,6 +31,7 @@ const EditIncome: React.FC = () => {
   const [error, setError] = useState<string | null>(null);
   const [context, setContext] = useState<string>('');
   const [email, setEmail] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchIncome = async () => {
@@ -152,6 +155,7 @@ const EditIncome: React.FC = () => {
 
   const handleUpdate = async () => {
     try {
+      setIsLoading(true);
       const token = localStorage.getItem('token');
       if (!token) throw new Error('No token found');
   
@@ -170,6 +174,8 @@ const EditIncome: React.FC = () => {
       } else {
         setError('An unknown error occurred.');
       }
+    }finally {
+      setIsLoading(false);
     }
   };
   
@@ -307,11 +313,15 @@ const EditIncome: React.FC = () => {
             </div>
           </div>
           <button
-            onClick={handleUpdate}
-            className="bg-blue-500 text-white py-2 mt-4 rounded-lg w-full hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
+          onClick={handleUpdate}
+           className={`bg-blue-500 text-white py-2 mt-4 rounded-lg w-full hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+          disabled={isLoading}
           >
-            Update
-          </button>
+        {isLoading && (
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+        )}
+        Update
+      </button>
         </div>
       )}
       </div>

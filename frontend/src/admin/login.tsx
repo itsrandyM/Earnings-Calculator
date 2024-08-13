@@ -2,15 +2,19 @@
 import React, { useState } from 'react';
 import apiClient from '../apiClient';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 const AdminLogin: React.FC = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const response = await apiClient.post('/api/login/admin', {
@@ -39,6 +43,8 @@ const AdminLogin: React.FC = () => {
       } else {
         setError('An unknown error occurred');
       }
+    } finally{
+      setIsLoading(false);
     }
   };
 
@@ -68,9 +74,16 @@ const AdminLogin: React.FC = () => {
               className="block w-full border rounded p-2"
               required
             />
-            <button type="submit" className="bg-blue-500 text-white p-2 rounded w-full">
-              Login
-            </button>
+            <button
+        type="submit"
+        className={`bg-blue-500 text-white p-2 rounded w-full flex justify-center items-center ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        disabled={isLoading}
+      >
+        {isLoading && (
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+        )}
+        Login
+      </button>
           </form>
         </div>
       </div>

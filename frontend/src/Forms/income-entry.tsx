@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import apiClient from '../apiClient'; // Import your apiClient
 import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 
 interface MonthlyData {
   techJob: number;
@@ -18,6 +20,7 @@ const IncomeEntry: React.FC = () => {
   const [comment, setComment] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const calculateKenyanPayableTax = (monthlyIncome: number) => {
     let tax = 0;
@@ -110,6 +113,7 @@ const IncomeEntry: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const token = getAuthToken();
@@ -150,6 +154,8 @@ const IncomeEntry: React.FC = () => {
         setError('An unknown error occurred.');
       }
       setSuccessMessage(null);
+    }finally {
+      setIsLoading(false);
     }
   };
 
@@ -294,13 +300,16 @@ const IncomeEntry: React.FC = () => {
               </div>
 
             )}
-           
-            <button
-              type="submit"
-              className="bg-blue-500 text-white py-2 rounded-lg w-full hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none"
-            >
-              Submit
-            </button>
+        <button
+        type="submit"
+        className={`bg-blue-500 text-white py-2 rounded-lg w-full hover:bg-blue-600 focus:ring-2 focus:ring-blue-500 focus:outline-none${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        disabled={isLoading}
+      >
+        {isLoading && (
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+        )}
+        Submit
+      </button>
             {error && <p className="text-red-500 mt-4">{error}</p>}
             {successMessage && <p className="text-green-500 mt-4">{successMessage}</p>}
           </form>

@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { login, signup } from './authService'; 
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 // import jwtDecode from 'jwt-decode';
 
 const AuthForm: React.FC = () => {
@@ -195,9 +197,11 @@ const LoginForm: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setIsLoading(true);
 
     try {
       const data = await login(email, password);
@@ -220,6 +224,8 @@ const LoginForm: React.FC = () => {
       } else {
         setError('An unknown error occurred');
       }
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -240,9 +246,20 @@ const LoginForm: React.FC = () => {
         onChange={(e) => setPassword(e.target.value)}
         className="block w-full border rounded p-2"
       />
-      <button type="submit" className="bg-blue-500 text-white p-2 rounded w-full">
+      {/* <button type="submit" className="bg-blue-500 text-white p-2 rounded w-full">
+        Login
+      </button> */}
+       <button
+        type="submit"
+        className={`bg-blue-500 text-white p-2 rounded w-full flex justify-center items-center ${isLoading ? 'opacity-50 cursor-not-allowed' : ''}`}
+        disabled={isLoading}
+      >
+        {isLoading && (
+          <FontAwesomeIcon icon={faSpinner} spin className="mr-2" />
+        )}
         Login
       </button>
+   
       
     </form>
   );
