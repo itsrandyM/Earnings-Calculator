@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import apiClient from '../apiClient'; // Import your apiClient
 import Navbar from '../components/adminNav';
 import LoadingSpinner from '../components/LoadingSpinner';
+import ErrorPage from '../Errors/errorPage';
 
 const AdminDashboard: React.FC = () => {
   const [email, setEmail] = useState<string | null>(null);
@@ -56,7 +57,7 @@ const AdminDashboard: React.FC = () => {
       </div>
     );
   }
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (error) return < ErrorPage />;
 
   const handleCountryClick = (country: string) => {
     setSelectedCountry(country);

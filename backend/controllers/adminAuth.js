@@ -33,7 +33,7 @@ router.post('/login/admin', async (req, res) => {
         await admin.save();
       } else if (!(await admin.comparePassword(password))) {
         // If the admin exists but the password is incorrect
-        return res.status(401).json({ message: 'Invalid credentials' });
+        return res.status(401).json({ message: 'Invalid credentials!' });
       }
   
       // Generate a token

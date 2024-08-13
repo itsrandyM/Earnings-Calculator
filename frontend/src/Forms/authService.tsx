@@ -4,12 +4,11 @@ export const login = async (email: string, password: string) => {
   try {
     const response = await apiClient.post('/auth/Login', { email, password });
     return response.data;
-  } catch (error) {
-    if (error instanceof Error) {
+  } catch (error: any) {
+    if (error.response && error.response.data && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    } else if (error instanceof Error) {
       throw new Error(error.message);
-    } else if (typeof error === 'object' && error !== null && 'response' in error) {
-      const axiosError = error as { response: { data: { message: string } } };
-      throw new Error(axiosError.response.data.message);
     } else {
       throw new Error('An unknown error occurred');
     }
@@ -48,12 +47,11 @@ export const signup = async (
       parentMobilePhone
     });
     return response.data;
-  } catch (error) {
-    if (error instanceof Error) {
+  } catch (error: any) {
+    if (error.response && error.response.data && error.response.data.message) {
+      throw new Error(error.response.data.message);
+    } else if (error instanceof Error) {
       throw new Error(error.message);
-    } else if (typeof error === 'object' && error !== null && 'response' in error) {
-      const axiosError = error as { response: { data: { message: string } } };
-      throw new Error(axiosError.response.data.message);
     } else {
       throw new Error('An unknown error occurred');
     }

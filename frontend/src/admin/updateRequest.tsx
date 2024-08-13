@@ -3,6 +3,7 @@ import apiClient from '../apiClient';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Navbar from '../components/adminNav';
 import { MdOutlinePending } from "react-icons/md";
+import ErrorPage from '../Errors/errorPage';
 
 interface Income {
   _id: string;
@@ -98,7 +99,7 @@ const AdminUpdateRequest: React.FC = () => {
       </div>
     );
   }
-  if (error) return <p className="text-red-600 text-center">{error}</p>;
+  if (error) return < ErrorPage />;
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-50 p-6 pt-28">

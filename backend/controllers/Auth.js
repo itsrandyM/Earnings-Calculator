@@ -34,14 +34,14 @@ const SignUp = expressAsyncHandler(async (req, res) => {
           !parentEmail ||
           !parentMobilePhone
         ) {
-          res.status(400);
+          res.status(400).json({ message: 'All fields are required!' });
           throw new Error('All fields are required');
         }
       
         const userExists = await User.findOne({ email });
       
         if (userExists) {
-          res.status(400);
+          res.status(400).json({ message: 'User already exists' });
           throw new Error('User already exists');
         }
       
@@ -73,7 +73,7 @@ const SignUp = expressAsyncHandler(async (req, res) => {
             message: 'Signup successful, you are now logged in!'
           });
         } else {
-          res.status(400);
+          res.status(400).json({ message: 'Invalid user data' });
           throw new Error('Invalid user data');
         }
       }
@@ -84,7 +84,7 @@ const Login = expressAsyncHandler(async (req, res) => {
   
     if (!email || !password) {
       res.status(400);
-      throw new Error('Email and password are required');
+      throw new Error('Email and password are required!');
     }
   
     const user = await User.findOne({ email });
@@ -98,8 +98,8 @@ const Login = expressAsyncHandler(async (req, res) => {
         message: 'Login Successful'
       });
     } else {
-      res.status(401);
-      throw new Error('Invalid email or password');
+      res.status(401).json({ message: 'Invalid email or password!' });
+      throw new Error('Invalid email or password!');
     }
   })
 
@@ -107,7 +107,7 @@ const Logout = expressAsyncHandler(async (req, res) => {
     const token = req.header('Authorization')?.replace('Bearer ', '');
   
     if (!token) {
-      res.status(400);
+      res.status(400).json({ message: 'No token provided!' });
       throw new Error('No token provided');
     }
   
@@ -123,10 +123,11 @@ const Logout = expressAsyncHandler(async (req, res) => {
   })
 
 // Generate JWT
-const generateToken = (id,email) => {
-    return jwt.sign({ id, email }, process.env.JWT_SECRET, {
-      expiresIn: '7d',
-    });
-  };
+// const generateToken = (id,email) => {
+//     return jwt.sign({ id, email }, process.env.JWT_SECRET, {
+//       expiresIn: '7d',
+//     });
+//   };
 
 module.exports = {SignUp,Login,Logout}
+

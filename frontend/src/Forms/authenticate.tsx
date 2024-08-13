@@ -216,7 +216,7 @@ const LoginForm: React.FC = () => {
       navigate('/dash-user')
     }  catch (error) {
       if (error instanceof Error) {
-        setError('Error logging in. Use correct credentials');
+        setError(error.message);
       } else {
         setError('An unknown error occurred');
       }
@@ -225,7 +225,7 @@ const LoginForm: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      {error && <div className="text-red-500 border-red-900 bg-red-300 text-center font-bold">{error}</div>}
+      {error && <div className="text-red-500 col-span-2">{error}</div>}
       <input
         type="email"
         placeholder="Email"

@@ -33,17 +33,13 @@ const AdminLogin: React.FC = () => {
 
       // Redirect to admin dashboard or homepage
       navigate('/admin-dashboard');
-    }  catch (error) {
-      setError('Error logging in. Invalid Password or email');
-    if (error instanceof Error) {
-      throw new Error(error.message);
-    } else if (typeof error === 'object' && error !== null && 'response' in error) {
-      const axiosError = error as { response: { data: { message: string } } };
-      throw new Error(axiosError.response.data.message);
-    } else {
-      throw new Error('An unknown error occurred');
+    } catch (error: any) {
+      if (error.response && error.response.data && error.response.data.message) {
+        setError(error.response.data.message);
+      } else {
+        setError('An unknown error occurred');
+      }
     }
-  }
   };
 
   return (
@@ -55,7 +51,7 @@ const AdminLogin: React.FC = () => {
         <div className="md:w-2/3 p-6">
           <h2 className="text-2xl font-bold mb-4">Administrator Login</h2>
           <form onSubmit={handleSubmit} className="space-y-4">
-            {error && <div className="text-red-500 border-red-900 bg-red-300">{error}</div>}
+            {error && <div className="text-red-500">{error}</div>}
             <input
               type="email"
               placeholder="Email"

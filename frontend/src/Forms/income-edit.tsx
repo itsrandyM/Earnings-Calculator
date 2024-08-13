@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import apiClient from '../apiClient';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Navbar from '../components/Navbar';
+import ErrorPage from '../Errors/errorPage';
 
 interface Income {
   _id: string;
@@ -180,7 +181,7 @@ const EditIncome: React.FC = () => {
       </div>
     );
   }
-  if (error) return <p className="text-red-500">{error}</p>;
+  if (error) return < ErrorPage />;
 
   return (
     <div className="min-h-screen flex flex-col items-center bg-gray-100 p-6 pt-28">
