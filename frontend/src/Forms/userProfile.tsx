@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import apiClient from '../apiClient';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Navbar from '../components/Navbar';
+import { MdKeyboardArrowRight } from "react-icons/md";
 
 interface UserDetails {
   _id: string;
@@ -139,12 +140,16 @@ const UserAccountDetails: React.FC = () => {
         </div>
         <div className="mt-8">
           {!isEditing ? (
+            <div className='flex flex-row justify-between'>
             <button
               onClick={() => setIsEditing(true)}
               className="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-4 focus:ring-blue-300"
             >
               Edit Details
             </button>
+
+            <Link className='flex flex-row text-center hover:scale-110' to={'/dash-user'}> <p>Dashboard</p><MdKeyboardArrowRight className='-mt-1 text-4xl'/></Link>
+            </div>
           ) : (
             <form onSubmit={handleUpdate}>
               <h2 className="text-2xl font-semibold mb-4">Update Details</h2>

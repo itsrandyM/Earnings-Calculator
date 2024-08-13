@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import apiClient from '../apiClient';
 import LoadingSpinner from '../components/LoadingSpinner';
 import Navbar from '../components/Navbar';
 import ErrorPage from '../Errors/errorPage';
+import { MdKeyboardArrowRight } from "react-icons/md";
+
 
 interface Income {
   _id: string;
@@ -195,7 +197,11 @@ const EditIncome: React.FC = () => {
             <p className="text-lg font-medium text-gray-700">{email}</p>
           </div>
         </div>
-      <h1 className="text-2xl font-bold mb-4 text-center">Edit Income</h1>
+        <div className='flex flex-row justify-between mb-4'>
+          <div></div>
+      <h1 className="text-2xl font-bold mb-4 text-center ml-24">Edit Income</h1>
+      <Link className='flex flex-row text-center hover:scale-110' to={'/dash-user'}> <p>Dashboard</p><MdKeyboardArrowRight className='-mt-1 text-4xl'/></Link>
+      </div>
       {income && (
         <div className="bg-white shadow-lg rounded-lg p-6 mb-6 w-full">
           <div className="text-center text-lg font-semibold mb-4">
