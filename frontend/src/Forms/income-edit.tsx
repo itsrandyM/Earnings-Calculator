@@ -206,7 +206,7 @@ const EditIncome: React.FC = () => {
         <div className='flex flex-row justify-between mb-4'>
           <div></div>
       <h1 className="text-2xl font-bold mb-4 text-center ml-24">Edit Income</h1>
-      <Link className='flex flex-row text-center hover:scale-110' to={'/dash-user'}> <p>Dashboard</p><MdKeyboardArrowRight className='-mt-1 text-4xl'/></Link>
+      <Link className='flex flex-row text-center hover:scale-110 text-blue-500' to={'/dash-user'}> <p>Dashboard</p><MdKeyboardArrowRight className='-mt-1 text-4xl'/></Link>
       </div>
       {income && (
         <div className="bg-white shadow-lg rounded-lg p-6 mb-6 w-full">

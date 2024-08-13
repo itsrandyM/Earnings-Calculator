@@ -148,7 +148,7 @@ const UserAccountDetails: React.FC = () => {
               Edit Details
             </button>
 
-            <Link className='flex flex-row text-center hover:scale-110' to={'/dash-user'}> <p>Dashboard</p><MdKeyboardArrowRight className='-mt-1 text-4xl'/></Link>
+            <Link className='flex flex-row text-center hover:scale-110 text-blue-500' to={'/dash-user'}> <p>Dashboard</p><MdKeyboardArrowRight className='-mt-1 text-4xl'/></Link>
             </div>
           ) : (
             <form onSubmit={handleUpdate}>
