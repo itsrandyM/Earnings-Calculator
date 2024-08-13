@@ -123,11 +123,11 @@ const Logout = expressAsyncHandler(async (req, res) => {
   })
 
 // Generate JWT
-// const generateToken = (id,email) => {
-//     return jwt.sign({ id, email }, process.env.JWT_SECRET, {
-//       expiresIn: '7d',
-//     });
-//   };
+const generateToken = (id,email) => {
+    return jwt.sign({ id, email }, process.env.JWT_SECRET, {
+      expiresIn: '7d',
+    });
+  };
 
 module.exports = {SignUp,Login,Logout}
 
