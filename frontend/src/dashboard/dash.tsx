@@ -220,18 +220,22 @@ const AdminDashboard: React.FC = () => {
                                 <strong>Projected Income:</strong>
                               </p>
                               <ul className="pl-4 list-disc">
-                              <CurrencyConverter amount={income.techJobEarnings || 0} currency={currency} onCurrencyChange={handleCurrencyChange} />
-                              <CurrencyConverter amount={income.otherEarnings || 0} currency={currency} onCurrencyChange={handleCurrencyChange} />
+                                <li className='flex flex-row items-center gap-1'>
+                                  Tech Job - <CurrencyConverter amount={income.techJobEarnings || 0} currency={currency} onCurrencyChange={handleCurrencyChange} />
+                                </li>
+                                <li className='flex flex-row items-center gap-1'>
+                                  Other - <CurrencyConverter amount={income.otherEarnings || 0} currency={currency} onCurrencyChange={handleCurrencyChange} />
+                                </li>
                               </ul>
                               <p className="mt-2 mb-1">
                                 <strong>Actual Income:</strong>
                               </p>
                               <ul className="pl-4 list-disc">
-                                <li>
-                                  Tech Job - {income.currency} {income.techJobEarnings || 'N/A'}
+                              <li className='flex flex-row items-center gap-1'>
+                                  Tech Job - <CurrencyConverter amount={income.techJobEarnings || 0} currency={currency} onCurrencyChange={handleCurrencyChange} />
                                 </li>
-                                <li>
-                                  Other - {income.currency} {income.otherEarnings || 'N/A'}
+                                <li className='flex flex-row items-center gap-1'>
+                                  Other - <CurrencyConverter amount={income.otherEarnings || 0} currency={currency} onCurrencyChange={handleCurrencyChange} />
                                 </li>
                               </ul>
                               <p className="mt-2">
@@ -292,19 +296,20 @@ const AdminDashboard: React.FC = () => {
                                 <li className='flex flex-row items-center gap-1'>
                                   Tech Job - <CurrencyConverter amount={income.techJobEarnings || 0} currency={currency} onCurrencyChange={handleCurrencyChange} />
                                 </li>
-                                <li>
-                                  Other - {income.currency} {income.otherEarnings || 'N/A'}
+                                <li className='flex flex-row items-center gap-1'>
+                                  Other - <CurrencyConverter amount={income.otherEarnings || 0} currency={currency} onCurrencyChange={handleCurrencyChange} />
                                 </li>
                               </ul>
                               <p className="mt-2 mb-1">
                                 <strong>Actual Income:</strong>
                               </p>
                               <ul className="pl-4 list-disc">
-                                <li>
-                                  Tech Job - {income.currency} {income.techJobEarnings || 'N/A'}
+                              <li className='flex flex-row items-center gap-1'>
+                              Tech Job - <CurrencyConverter amount={income.techJobEarnings || 0} currency={currency} onCurrencyChange={handleCurrencyChange} />
+
                                 </li>
-                                <li>
-                                  Other - {income.currency} {income.otherEarnings || 'N/A'}
+                                <li className='flex flex-row items-center gap-1'>
+                                  Other - <CurrencyConverter amount={income.otherEarnings || 0} currency={currency} onCurrencyChange={handleCurrencyChange} />
                                 </li>
                               </ul>
                               <p className="mt-2">
