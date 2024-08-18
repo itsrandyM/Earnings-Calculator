@@ -278,3 +278,14 @@ exports.getIncomesByUser = async (req, res) => {
     res.status(500).json({ message: 'Server error.' });
   }
 };
+
+exports.fetchIncomeUpdates = async (req, res) => {
+  try {
+    const requests = await IncomeUpdateRequest.find({ userId: req.user.id }).populate('incomeId').populate('userId').sort({ createdAt: -1 });
+    res.status(200).json(requests);
+    console.log(requests)
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error.' });
+  }
+};
