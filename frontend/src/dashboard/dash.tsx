@@ -198,7 +198,7 @@ const AdminDashboard: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold my-4 text-center">First Half of the Year</h4>
+                  <h4 className="text-lg font-bold my-4 text-center">First Half of the Year - {selectedYear}</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {selectedStudent.incomes.length > 0 ? (
                       selectedStudent.incomes
@@ -271,7 +271,7 @@ const AdminDashboard: React.FC = () => {
                   </div>
                 </div>
                 <div>
-                  <h4 className="text-lg font-bold my-4 text-center">Second Half of the Year</h4>
+                  <h4 className="text-lg font-bold my-4 text-center">Second Half of the Year - {selectedYear}</h4>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                     {selectedStudent.incomes.length > 0 ? (
                       selectedStudent.incomes

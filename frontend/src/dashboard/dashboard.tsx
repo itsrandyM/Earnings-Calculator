@@ -6,6 +6,8 @@ import { Link, useNavigate } from 'react-router-dom';
 import { FiTrash } from "react-icons/fi";
 import DeleteIncomeModal from '../components/deleteModal';
 import ErrorPage from '../Errors/errorPage';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faCheck, faX } from '@fortawesome/free-solid-svg-icons';
 
 interface Income {
   _id: string;
@@ -174,18 +176,25 @@ const UserDashboard: React.FC = () => {
                       </p>
                     </div>
                     {updateRequest && (
-                      <p className={`text-sm font-medium mt-2 ${
-                        updateRequest.status === 'approved'
-                          ? 'text-green-500'
-                          : updateRequest.status === 'rejected'
-                          ? 'text-red-500'
-                          : updateRequest.status === 'pending'
-                          ? 'text-gray-500'
-                          :'text-yellow-400'
-                      }`}>
-                       Requested Update Status: {updateRequest.status}
-                      </p>
-                    )}
+  <p className={`text-sm font-medium mt-2 ${
+    updateRequest.status === 'approved'
+      ? 'text-green-500 flex items-center' // Add flex and items-center for alignment
+      : updateRequest.status === 'rejected'
+      ? 'text-red-500'
+      : updateRequest.status === 'pending'
+      ? 'text-gray-500'
+      : 'text-yellow-400'
+  }`}>
+    
+    Requested Update Status: {updateRequest.status}
+    {updateRequest.status === 'approved' && (
+      <FontAwesomeIcon icon={faCheck} className="ml-2" /> 
+    )}
+    {updateRequest.status === 'rejected' && (
+      <FontAwesomeIcon icon={faX} className="ml-2" /> 
+    )}
+  </p>
+)}
                     <div className='flex justify-between'>
                       <button
                         className="mt-2 bg-blue-500 text-white py-1 px-3 rounded-lg hover:bg-blue-600"

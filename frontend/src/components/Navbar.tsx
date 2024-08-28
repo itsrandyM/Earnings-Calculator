@@ -47,11 +47,11 @@ const Navbar: React.FC = () => {
           </button>
         </div>
         <div className={`flex-col space-y-4 md:space-y-0 md:flex md:flex-row md:space-x-4 items-center ${isOpen ? 'flex' : 'hidden'} md:flex`}>
-          <Link to="/dash-user" className="text-white hover:underline">
-            Dashboard
+          <Link to="/dash-user" className="text-white">
+          <span className="relative before:content-[''] before:absolute before:bottom-0 before:left-0 before:right-0 before:h-[2px] before:bg-white before:transform before:origin-bottom-right before:scale-x-0 before:transition-transform before:duration-500 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">Dashboard</span>
           </Link>
-          <Link to="/income-entry" className="text-white hover:underline">
-            Income Entry
+          <Link to="/income-entry" className="text-white">
+          <span className="relative before:content-[''] before:absolute before:bottom-0 before:left-0 before:right-0 before:h-[2px] before:bg-white before:transform before:origin-bottom-right before:scale-x-0 before:transition-transform before:duration-500 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">Income Entry</span>
           </Link>
           <LogoutButton />
         </div>

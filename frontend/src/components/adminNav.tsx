@@ -56,11 +56,11 @@ const Navbar: React.FC = () => {
             isOpen ? 'flex' : 'hidden'
           } md:flex`}
         >
-          <Link to="/admin-dashboard" className="text-white hover:underline">
-            Dashboard
+          <Link to="/admin-dashboard" className="text-white">
+          <span className="relative before:content-[''] before:absolute before:bottom-0 before:left-0 before:right-0 before:h-[2px] before:bg-white before:transform before:origin-bottom-right before:scale-x-0 before:transition-transform before:duration-500 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">Dashboard</span>
           </Link>
-          <Link to="/update-requests" className="text-white hover:underline relative ">
-            Update Requests
+          <Link to="/update-requests" className="text-white relative ">
+          <span className="relative before:content-[''] before:absolute before:bottom-0 before:left-0 before:right-0 before:h-[2px] before:bg-white before:transform before:origin-bottom-right before:scale-x-0 before:transition-transform before:duration-500 before:ease-in-out hover:before:origin-bottom-left hover:before:scale-x-100">Update Requests</span>
             {pendingCount > 0 && (
               <span className="absolute top-0 right-0 mt-0 -mr-6 bg-red-600 text-white rounded-full px-2 text-xs">
                 {pendingCount}

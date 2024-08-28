@@ -4,6 +4,7 @@ import Navbar from '../components/Navbar';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
+import PDFUploader from '../components/pdfAttachment';
 
 interface MonthlyData {
   techJob: number;
@@ -18,6 +19,7 @@ const IncomeEntry: React.FC = () => {
   const [monthlyData, setMonthlyData] = useState<MonthlyData[]>(Array(6).fill({ techJob: 0, otherIncome: 0 }));
   const [link, setLink] = useState('');
   const [comment, setComment] = useState('');
+  const [pdfFile, setPdfFile] = useState<File | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [successMessage, setSuccessMessage] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -111,6 +113,10 @@ const IncomeEntry: React.FC = () => {
     setMonthlyData(newData);
   };
 
+  const handleFileUpload = (file: File | null) => {
+    setPdfFile(file);
+  };
+  
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -130,7 +136,8 @@ const IncomeEntry: React.FC = () => {
           earningsSubjectToIncomeSharing,
           amountDueToDirectEd,
           link,
-          comment
+          comment,
+          pdfFile
         };
       });
 
@@ -297,6 +304,8 @@ const IncomeEntry: React.FC = () => {
                 rows={3}
               />
             </div>
+            <PDFUploader onFileUpload={handleFileUpload} />
+
               </div>
 
             )}

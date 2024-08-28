@@ -108,18 +108,18 @@ const AdminUpdateRequest: React.FC = () => {
         <h1 className="text-2xl font-bold mb-4 text-gray-800">Update Requests</h1>
         {requests.length > 0 ? (
           requests.map((request) => (
-            <div key={request._id} className="bg-white shadow-md rounded-lg p-6 mb-6 border border-gray-200">
+            <div key={request._id} className="bg-white shadow-sm rounded-lg p-6 mb-6 ">
               <div className='flex justify-between items-center mb-4'>
-                <h2 className="text-lg font-semibold text-gray-700">
+                <h2 className="text-lg font-semibold text-gray-800">
                   Income Update Request: {request.userId.firstName} {request.userId.lastName}
                 </h2>
-                <div className='flex items-center border p-2 bg-gray-100 rounded'>
-                  <MdOutlinePending className='text-2xl text-gray-600 mr-2' />
-                  <h3 className='text-md font-medium text-gray-600'>{request.status}</h3>
+                <div className='flex items-center p-1 bg-gray-100 rounded'>
+                  <MdOutlinePending className='text-xl text-gray-600 mr-2' />
+                  <span className='text-sm font-medium text-gray-600'>{request.status}</span>
                 </div>
               </div>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6 ">
+                <div className="bg-white p-3 rounded-lg shadow-sm ">
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">Original Income Data</h3>
                   <p><strong>Month:</strong> {request.originalData.month}</p>
                   <p><strong>Year:</strong> {request.originalData.year}</p>
@@ -130,7 +130,7 @@ const AdminUpdateRequest: React.FC = () => {
                   <p><strong>Earnings Subject to Income Sharing:</strong> {request.originalData.currency} {request.originalData.earningsSubjectToIncomeSharing.toFixed(2)}</p>
                   <p><strong>Amount Due to DirectEd:</strong> {request.originalData.currency} {request.originalData.amountDueToDirectEd.toFixed(2)}</p>
                 </div>
-                <div className="bg-white p-4 rounded-lg shadow-sm border border-gray-200">
+                <div className="bg-white p-3 rounded-lg shadow-sm">
                   <h3 className="text-lg font-semibold text-gray-800 mb-2">Updated Income Data</h3>
                   <p><strong>Month:</strong> {request.updatedData.month}</p>
                   <p><strong>Year:</strong> {request.updatedData.year}</p>
@@ -142,7 +142,7 @@ const AdminUpdateRequest: React.FC = () => {
                   <p><strong>Amount Due to DirectEd:</strong> {request.updatedData.currency} {request.updatedData.amountDueToDirectEd.toFixed(2)}</p>
                 </div>
               </div>
-              <p className="mb-4"><strong>Context:</strong> {request.context}</p>
+              <p className="text-sm text-gray-600 mb-4"><strong>Context:</strong> {request.context}</p>
               <div className="flex space-x-4">
                 <button
                   onClick={() => handleProcessRequest(request._id, 'approve')}
