@@ -22,20 +22,8 @@ const AdminLogin: React.FC = () => {
         password,
       });
 
-      const { token, admin } = response.data;
+      const { admin } = response.data;
       localStorage.setItem('email', admin.email)
-      // Store the token in localStorage
-      
-      const storeToken = (token: string, isAdmin: boolean = false) => {
-        localStorage.setItem('token', token);
-        localStorage.setItem('isAdmin', isAdmin ? 'true' : 'false');
-      };
-      storeToken(token, true);
-
-      const isAdmin = localStorage.getItem('isAdmin') === 'true';
-      console.log('isAdmin:', isAdmin);
-
-      // Redirect to admin dashboard or homepage
       navigate('/admin-dashboard');
     } catch (error: any) {
       if (error.response && error.response.data && error.response.data.message) {

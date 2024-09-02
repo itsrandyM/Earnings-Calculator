@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import LogoutButton from '../buttons/logout';
+import LogoutButton from '../admin/logoutAdmin';
 import usePendingRequestsCount from '../hooks/usePendingRequests';
 
 const Navbar: React.FC = () => {

@@ -1,15 +1,15 @@
 const jwt = require('jsonwebtoken');
-const User = require('../models/User'); // Adjust the path as necessary
+const User = require('../models/User'); 
 
 const authenticateToken = async (req, res, next) => {
   try {
-    const token = req.headers['authorization']?.split(' ')[1];
+    // const token = req.headers['authorization']?.split(' ')[1];
+    const token = req.cookies.jwt
 
     if (!token) {
       return res.status(401).json({ message: 'Authorization token is missing.' });
     }
 
-    // Verify the token
     jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
       if (err) {
         if (err.name === 'TokenExpiredError') {
@@ -18,7 +18,6 @@ const authenticateToken = async (req, res, next) => {
         return res.status(403).json({ message: 'Invalid token.' });
       }
 
-      // Fetch the user from the database if needed (optional)
       const user = await User.findById(decoded.id);
       if (!user) {
         return res.status(401).json({ message: 'User not found.' });

@@ -46,15 +46,7 @@ const AdminUpdateRequest: React.FC = () => {
   useEffect(() => {
     const fetchRequests = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('No token found');
-
-        const response = await apiClient.get('/api/update-requests', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
+        const response = await apiClient.get('/api/update-requests');
         setRequests(response.data);
         setLoading(false);
       } catch (error) {
@@ -72,15 +64,8 @@ const AdminUpdateRequest: React.FC = () => {
 
   const handleProcessRequest = async (requestId: string, action: string) => {
     try {
-      const token = localStorage.getItem('token');
-      if (!token) throw new Error('No token found');
 
-      const response = await apiClient.post(`/api/update-request/${requestId}`, { action }, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
+      const response = await apiClient.post(`/api/update-request/${requestId}`, { action });
       console.log(response.data);
       setRequests(requests.filter((req) => req._id !== requestId));
     } catch (error) {

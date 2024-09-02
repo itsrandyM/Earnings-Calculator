@@ -16,17 +16,13 @@ const DeleteIncomeModal: React.FC<DeleteIncomeModalProps> = ({ incomeId, onClose
   const [success, setSuccess] = useState<string | null>(null);
 
   const handleDelete = async () => {
-    try {
-      const token = localStorage.getItem('token');
-      if (!token) throw new Error('No token found');
-  
+    try {  
       await apiClient.delete(`/api/income/${incomeId}`, {
         headers: {
-          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
         data: {
-          password, // Pass the password in the request body
+          password, 
         },
       });
   
