@@ -60,35 +60,9 @@ export const signup = async (
 
 export const logout = async () => {
   try {
-   
-    const Admi = localStorage.getItem('isAdmin') 
-    console.log('admin?',Admi)
-
-    const token = localStorage.getItem('token');
-    if (!token) throw new Error('No token found');
-
-    await apiClient.post(
-      '/auth/Logout',
-      {},
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
-
-    // Clear localStorage
-    const isAdmin = localStorage.getItem('isAdmin') === 'true';
-    console.log('isAdmin:', isAdmin); // Verify this value
-
-    localStorage.removeItem('token');
+    await apiClient.post('/auth/Logout');
     localStorage.removeItem('email');
-    if (isAdmin) {
-      window.location.href = '/admin-login';
-    } else {
-      window.location.href = '/';
-    }
-
+    window.location.href = '/';
   } catch (error) {
     console.error('Logout failed:', error);
     alert('Logout Failed')

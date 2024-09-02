@@ -45,15 +45,8 @@ const UserDashboard: React.FC = () => {
   useEffect(() => {
     const fetchIncomes = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('No token found');
-
-        const response = await apiClient.get('/api/income', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
+    
+        const response = await apiClient.get('/api/income');
         setIncomes(response.data);
       } catch (error) {
         if (error instanceof Error) {
@@ -68,15 +61,7 @@ const UserDashboard: React.FC = () => {
 
     const fetchUpdateRequests = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('No token found');
-
-        const response = await apiClient.get('/api/income/update-requests', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
+        const response = await apiClient.get('/api/income/update-requests');
         setUpdateRequests(response.data);
         // console.log(updateRequests)
       } catch (error) {

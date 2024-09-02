@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { logout } from '../Forms/authService'; // Ensure the path is correct
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
 import { useNavigate } from 'react-router-dom';
+import apiClient from '../apiClient';
 
 const LogoutButton: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -12,11 +12,12 @@ const LogoutButton: React.FC = () => {
     setIsLoading(true); 
 
     try {
-      await logout();
+      await apiClient.post('/api/logout/admin');
       localStorage.removeItem('email');
-      navigate('/login');
+      window.location.href = '/admin-login'
     } catch (error) {
       console.error('Logout failed:', error);
+      alert("Logout Failed!")
     } finally {
       setIsLoading(false); 
     }

@@ -66,10 +66,17 @@ const SignUp = expressAsyncHandler(async (req, res) => {
       
         if (user) {
             const token = generateToken(user._id, user.email);
-          res.status(201).json({
+          
+            res.cookie('jwt', token, {
+              httpOnly:true,
+              // secure:process.env.NODE_ENV === 'production',
+              sameSite:'strict',
+              maxAge: 7*24*60*1000
+            } )
+    
+            res.status(201).json({
             _id: user._id,
             email: user.email,
-            token: token,
             message: 'Signup successful, you are now logged in!'
           });
         } else {
@@ -91,21 +98,30 @@ const Login = expressAsyncHandler(async (req, res) => {
   
     if (user && (await bcrypt.compare(password, user.password))) {
         const token = generateToken(user._id, user.email);
-      res.json({
+
+        res.cookie('jwt', token, {
+          httpOnly:true,
+          secure:process.env.NODE_ENV === 'production',
+          sameSite:'strict',
+          maxAge: 7*24*60*1000
+        } )
+
+
+      res
+      .status(201)
+      .json({
         _id: user._id,
         email: user.email,
-        token: token,
         message: 'Login Successful'
       });
     } else {
-      res.status(401).json({ message: 'Invalid email or password!' });
+      res.status(400).json({ message: 'Invalid email or password!' });
       throw new Error('Invalid email or password!');
     }
   })
 
 const Logout = expressAsyncHandler(async (req, res) => {
-    const token = req.header('Authorization')?.replace('Bearer ', '');
-  
+    const token = req.cookies.jwt
     if (!token) {
       res.status(400).json({ message: 'No token provided!' });
       throw new Error('No token provided');
@@ -118,6 +134,12 @@ const Logout = expressAsyncHandler(async (req, res) => {
       token,
       expiresAt: new Date(decoded.exp * 1000) // Token expiry time in milliseconds
     });
+
+    res.clearCookie('jwt', {
+      httpOnly: true,
+      // secure: process.env.NODE_ENV === 'production',
+      sameSite:'strict'
+    })
   
     res.json({ message: 'Logged out successfully' });
   })

@@ -34,17 +34,9 @@ const UserAccountDetails: React.FC = () => {
   useEffect(() => {
     const fetchUserDetails = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('No token found');
-
         if (!userId) throw new Error('User ID not provided');
 
-        const response = await apiClient.get(`/api/user/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
+        const response = await apiClient.get(`/api/user/${userId}`);
         setUser(response.data);
       } catch (error) {
         setError(error instanceof Error ? error.message : 'An unknown error occurred.');
@@ -67,18 +59,13 @@ const UserAccountDetails: React.FC = () => {
     setSuccess(null);
 
     try {
-      const token = localStorage.getItem('token');
-      if (!token) throw new Error('No token found');
-
       if (!user) throw new Error('User details are not loaded');
 
       const response = await apiClient.patch(`/api/user/${user._id}`, user, {
         headers: {
-          Authorization: `Bearer ${token}`,
           'Content-Type': 'application/json',
         },
       });
-
       setSuccess('User updated successfully');
       setUser(response.data.update);
       setIsEditing(false);

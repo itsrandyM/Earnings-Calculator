@@ -9,15 +9,7 @@ const usePendingRequestsCount = () => {
   useEffect(() => {
     const fetchPendingRequestsCount = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('No token found');
-
-        const response = await apiClient.get('/api/update-requests-count', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
+        const response = await apiClient.get('/api/update-requests-count');
         setPendingCount(response.data.count);
       } catch (error) {
         console.error('Failed to fetch pending requests count:', error);

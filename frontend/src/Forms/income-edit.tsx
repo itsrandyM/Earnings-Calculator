@@ -36,15 +36,7 @@ const EditIncome: React.FC = () => {
   useEffect(() => {
     const fetchIncome = async () => {
       try {
-        const token = localStorage.getItem('token');
-        if (!token) throw new Error('No token found');
-
-        const response = await apiClient.get(`/api/income/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
+        const response = await apiClient.get(`/api/income/${id}`);
         setIncome(response.data);
         setLoading(false);
       } catch (error) {
@@ -156,18 +148,10 @@ const EditIncome: React.FC = () => {
   const handleUpdate = async () => {
     try {
       setIsLoading(true);
-      const token = localStorage.getItem('token');
-      if (!token) throw new Error('No token found');
-  
       const updatedData = { ...income, context };
-      const response = await apiClient.post(`/api/income/${id}/request-update`, updatedData, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-  
-      console.log(response.data);
-      navigate('/dash-user'); // Navigate back to the dashboard after successful request submission
+      const response = await apiClient.post(`/api/income/${id}/request-update`, updatedData);
+        console.log(response.data);
+      navigate('/dash-user'); 
     } catch (error) {
       if (error instanceof Error) {
         setError(error.message);

@@ -36,9 +36,15 @@ router.post('/login/admin', async (req, res) => {
         return res.status(401).json({ message: 'Invalid credentials!' });
       }
   
-      // Generate a token
+    
       const token = jwt.sign({ adminId: admin._id , Admin:admin.admin }, process.env.JWT_SECRET, { expiresIn: '7d' });
-      res.json({ token });
+      res.cookie('admin', token ,{
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite:'strict',
+        maxAge: 7*24*60*1000
+      })
+      res.status(201).json({ message:'Login successful!', admin });
     } catch (err) {
       res.status(500).json({ message: err.message });
     }
