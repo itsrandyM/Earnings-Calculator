@@ -1,13 +1,10 @@
 import React, { useState } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSpinner } from '@fortawesome/free-solid-svg-icons';
-import { useNavigate } from 'react-router-dom';
 import apiClient from '../apiClient';
 
 const LogoutButton: React.FC = () => {
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate();
-
   const handleLogout = async () => {
     setIsLoading(true); 
 
