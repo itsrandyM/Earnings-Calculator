@@ -1,6 +1,8 @@
 // corsOptions.js
 
 const allowedOrigins = [
+  'https://earnings-calculator.onrender.com',
+  'https://earnings-calculator-2.onrender.com',
   'https://earnings-calculator.vercel.app', 
   'http://localhost:5173',
   'https://66a74ba149e18b0008de12ba--directedpay.netlify.app'
