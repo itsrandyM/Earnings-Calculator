@@ -3,7 +3,9 @@
 const allowedOrigins = [
   'https://earnings-calculator.vercel.app', 
   'http://localhost:5173',
-  'https://66a74ba149e18b0008de12ba--directedpay.netlify.app'
+  'https://66a74ba149e18b0008de12ba--directedpay.netlify.app',
+  'https://earnings-calculator-2se.onrender.com',
+  'https://earnings-calculator-1.onrender.com'
 ];
 
 // const corsOptions = (req, callback) => {
