@@ -69,10 +69,10 @@ const SignUp = expressAsyncHandler(async (req, res) => {
                 console.log("Generated Token:", token)
           
             res.cookie('jwt', token, {
-              httpOnly:true,
-              secure:process.env.NODE_ENV === 'production',
-              sameSite:'strict',
-              maxAge: 7*24*60*1000
+               httpOnly:true,
+               secure:process.env.NODE_ENV === 'production',
+               sameSite:'none',
+               maxAge: 7*24*60*60*1000
             } )
                 console.log('Cookie set:', req.cookies)
     
