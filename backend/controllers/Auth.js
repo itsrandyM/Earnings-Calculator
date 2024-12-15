@@ -140,7 +140,7 @@ const Logout = expressAsyncHandler(async (req, res) => {
     res.clearCookie('jwt', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite:'strict'
+      sameSite:'none'
     })
   
     res.json({ message: 'Logged out successfully' });
