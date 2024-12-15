@@ -20,10 +20,10 @@ router.post('/login/admin', async (req, res) => {
 
     const token = jwt.sign({ adminId: admin._id, admin: admin.admin}, process.env.JWT_SECRET, { expiresIn: '6h' });
     res.cookie('adminToken', token ,{
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite:'strict',
-      maxAge: 7*24*60*1000
+          httpOnly:true,
+          secure:process.env.NODE_ENV === 'production',
+          sameSite:'none',
+          maxAge: 7*24*60*60*1000
     })
 
     return res.status(201).json({ message:'Login successful!', admin });
@@ -142,7 +142,7 @@ router.get('/students/:id', adminMiddleware, async (req, res) => {
     res.clearCookie('adminToken', {
       httpOnly: true,
       secure: process.env.NODE_ENV === 'production',
-      sameSite: 'strict',
+      sameSite: 'none',
     });
     return res.status(200).json({ message: 'Logout successful!' });
   });
