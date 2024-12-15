@@ -4,7 +4,6 @@ import { useNavigate } from 'react-router-dom';
 
 const apiClient = axios.create({
   baseURL: 'https://earnings-calculator.onrender.com', 
-  // baseURL: 'http://localhost:4000',
   withCredentials: true
 });
 
